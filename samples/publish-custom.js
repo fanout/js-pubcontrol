@@ -1,0 +1,25 @@
+// publish-custom.js
+// (C) 2013 Fan Out Networks, Inc.
+// File author: Katsuyuki Ohmuro <harmony7@pex2.jp>
+// Licensed under the MIT License, see file COPYING for details.
+
+// This example defines a custom format in terms of
+// EPCP and sends it to a custom server.
+
+var util = require('util');
+var pubcontrol = require('pubcontrol');
+
+// Create publisher for endpoint
+var pub = new pubcontrol.PubControl("http://example.com/path/to/endpoint");
+
+// Define format
+var MyFormat = function(data) { this.data = data; };
+util.inherits(MyFormat, pubcontrol.Format);
+MyFormat.prototype.name = function() { return "my-format"; };
+MyFormat.prototype.export = function() { return {"data": this.data}; }
+
+// Publish message
+pub.publish("test", new pubcontrol.Item(new MyFormat("hello world")), function(success, message) {
+    console.log(success);
+    console.dir(message);
+});
