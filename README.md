@@ -1,7 +1,7 @@
 nodepubcontrol - PubControl for NodeJS
 ======================================
 
-Date: April 3rd, 2013
+Date: April 3rd, 2013  
 Author: Katsuyuki Ohmuro <harmony7@pex2.jp>
 
 Description
@@ -14,10 +14,9 @@ extensible data publishing protocol using HTTP.  Data is published by way of
 HTTP POST, whose content is the JSON string representation of an object that
 follows certain structural guidelines.
 
-Each message consists of data items and a specified channel.  There may be any
-number of
-items in each message, even zero.  The messages are associated with the given
-channel and will only be delivered to those listeners subscribed to the channel.
+Each message consists of one or more data items, and is always sent to a
+specified channel.  The messages are associated with that channel and will
+only be delivered to those listeners subscribed to the channel.
 
 This library contains a Format base class and a PubControl class that is used
 to send messages.  This library also supports the case when the EPCP endpoint
@@ -97,5 +96,5 @@ appropriately. Then, instantiate the class and use it with the PubControl class.
 License
 -------
 
-(C) 2013 Fan Out Networks, Inc.
+(C) 2013 Fan Out Networks, Inc.  
 Licensed under the MIT License, see file COPYING for details.
