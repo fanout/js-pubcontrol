@@ -1,4 +1,29 @@
 {
-    "name" : "pubcontrol",
-    "main" : "./lib/pubcontrol"
+    "name": "pubcontrol",
+    "version": "0.1.0",
+    "author": "Fan Out Networks, Inc. <info@fanout.io>",
+    "description": "EPCP Library",
+    "contributors": [
+        {
+            "name": "Katsuyuki Ohmuro",
+            "email": "harmony7@pex2.jp"
+        }
+    ],
+    "main": "./lib/pubcontrol",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fanout/nodepubcontrol.git"
+    },
+    "readmeFilename": "README.md",
+    "keywords": [
+        "pubcontrol",
+        "fanout",
+        "realtime",
+        "push",
+        "publish"
+    ],
+    "dependencies": {
+        "jwt-simple": "*"
+    },
+    "license": "MIT"
 }
