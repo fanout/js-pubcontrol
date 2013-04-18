@@ -1,6 +1,6 @@
 {
     "name": "pubcontrol",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "author": "Fan Out Networks, Inc. <info@fanout.io>",
     "description": "EPCP Library",
     "contributors": [
