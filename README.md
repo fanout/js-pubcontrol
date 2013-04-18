@@ -1,8 +1,8 @@
 nodepubcontrol - PubControl for NodeJS
 ======================================
 
-Version: v 0.1.1  
-Date: April 17th, 2013  
+Version: v 0.2.0  
+Date: April 18th, 2013  
 Author: Katsuyuki Ohmuro <harmony7@pex2.jp>
 
 Description
@@ -50,9 +50,10 @@ class, defining a data format, and then publishing some data.
     MyFormat.prototype.export = function() { return {"data": this.data}; }
 
     // Publish message
-    pub.publish("test", new pubcontrol.Item(new MyFormat("hello world")), function(success, message) {
+    pub.publish("test", new pubcontrol.Item(new MyFormat("hello world")), function(success, message, context) {
         console.log(success);
-        console.dir(message);
+        console.log(message);
+        console.dir(context);
     });
 
 In some cases, the EPCP endpoint requires authentication before allowing its

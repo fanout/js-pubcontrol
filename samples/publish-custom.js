@@ -19,7 +19,8 @@ MyFormat.prototype.name = function() { return "my-format"; };
 MyFormat.prototype.export = function() { return {"data": this.data}; }
 
 // Publish message
-pub.publish("test", new pubcontrol.Item(new MyFormat("hello world")), function(success, message) {
+pub.publish("test", new pubcontrol.Item(new MyFormat("hello world")), function(success, message, context) {
     console.log(success);
-    console.dir(message);
+    console.log(message);
+    console.dir(context);
 });
