@@ -1,7 +1,7 @@
 nodepubcontrol - PubControl for NodeJS
 ======================================
 
-Version: v 0.1.1
+Version: v 0.1.1  
 Date: April 17th, 2013  
 Author: Katsuyuki Ohmuro <harmony7@pex2.jp>
 
