@@ -1,8 +1,8 @@
 nodepubcontrol - PubControl for NodeJS
 ======================================
 
-Version: v 0.3.2  
-Date: May 15th, 2013  
+Version: v 0.3.4  
+Date: April 2nd, 2013  
 Author: Katsuyuki Ohmuro <harmony7@pex2.jp>
 
 Description
@@ -98,5 +98,5 @@ appropriately. Then, instantiate the class and use it with the PubControl class.
 License
 -------
 
-(C) 2013 Fanout, Inc.  
+(C) 2014 Fanout, Inc.  
 Licensed under the MIT License, see file COPYING for details.
