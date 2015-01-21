@@ -48,9 +48,9 @@ var callback = function(success, message, context) {
         console.log('Publish successful!');
     }
     else {
-        console.log("Publish failed!");
-        console.log("Message: " + message);
-        console.log("Context: ");
+        console.log('Publish failed!');
+        console.log('Message: ' + message);
+        console.log('Context: ');
         console.dir(context); 
     }
 };
