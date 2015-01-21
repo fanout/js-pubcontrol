@@ -11,16 +11,16 @@ Description
 EPCP library for NodeJS
 
 HTTP Extensible Pubsub Control Protocol (EPCP) defines a generalized and
-extensible data publishing protocol using HTTP.  Data is published by way of
+extensible data publishing protocol using HTTP. Data is published by way of
 HTTP POST, whose content is the JSON string representation of an object that
 follows certain structural guidelines.
 
 Each message consists of one or more data items, and is always sent to a
-specified channel.  The messages are associated with that channel and will
+specified channel. The messages are associated with that channel and will
 only be delivered to those listeners subscribed to the channel.
 
 This library contains a Format base class and a PubControl class that is used
-to send messages.  This library also supports the case when the EPCP endpoint
+to send messages. This library also supports the case when the EPCP endpoint
 requires certain types of authentication.
 
 Requirements
@@ -84,17 +84,17 @@ pub.publish('<channel>', new pubcontrol.Item(
 ```
 
 In some cases, the EPCP endpoint requires authentication before allowing its
-use.  This library can provide Basic and JWT authentication for these cases. To use Basic authentication instantiate a PubControlClient class, use setBasicAuth() to set the username and password, and add the PubControlClient instance to the PubControl instance via addClient() as shown in the example above. To use JWT authentication pass a configuration to PubControl when instantiating it or via applyConfig and provide the claim as shown in the example above.
+use. This library can provide Basic and JWT authentication for these cases. To use Basic authentication instantiate a PubControlClient class, use setBasicAuth() to set the username and password, and add the PubControlClient instance to the PubControl instance via addClient() as shown in the example above. To use JWT authentication pass a configuration to PubControl when instantiating it or via applyConfig and provide the claim as shown in the example above.
 
 If the claim does not contain an exp value, then this library will create an
-appropriate value for that field on each use.  Since the header is generated
+appropriate value for that field on each use. Since the header is generated
 from the authorization object each time it needs to be used, the library is
 able to generate a new authorization header, even from the same auth object.
 
 It is also possible to use a literal JWT string for JWT authentication.
 This may be useful in certain cases, such as when you are performing a push
-request on behalf of another service.  That service can preencode the JWT
-token and hand it to you in its string representation.  This way, that service
+request on behalf of another service. That service can preencode the JWT
+token and hand it to you in its string representation. This way, that service
 does not need to hand the JWT signing key to you.
 
 ```javascript
