@@ -10,4 +10,5 @@ v 0.3.2 05-15-2013  - Documentation updates to reflect new company name.
 v 0.3.3, 0.3.4      - Version skipped  
 v 0.3.5 04-02-2014  - Fix Content-Length header on POST.  
 v 1.0.0 01-20-2014  - Implemented PubControlSet as PubControl and README updates.  
-v 1.0.1 01-20-2014  - Updated documentation.
+v 1.0.1 01-20-2014  - Updated documentation.  
+v 1.0.2 01-20-2014  - Updated documentation.
