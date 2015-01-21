@@ -1,6 +1,6 @@
 {
     "name": "pubcontrol",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Fanout, Inc. <info@fanout.io>",
     "description": "EPCP Library",
     "contributors": [
@@ -21,6 +21,7 @@
     "readmeFilename": "README.md",
     "keywords": [
         "pubcontrol",
+        "fanoutpub",
         "fanout",
         "realtime",
         "push",
