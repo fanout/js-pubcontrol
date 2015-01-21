@@ -1,9 +1,10 @@
 nodepubcontrol - PubControl for NodeJS
 ======================================
 
-Version: v 0.3.5  
-Date: April 2nd, 2013  
-Author: Katsuyuki Ohmuro <harmony7@pex2.jp>
+Version: v 1.0.0
+Date: January 20th 2015
+Authors: Katsuyuki Ohmuro <harmony7@pex2.jp>
+         Konstantin Bokarius <kon@fanout.io>
 
 Description
 -----------
@@ -34,44 +35,51 @@ Sample Usage
 This example illustrates the process of instantiating the PubControl publisher
 class, defining a data format, and then publishing some data.
 
-    // This example defines a custom format in terms of
-    // EPCP and publishes via a custom server at a specified endpoint.
+```javascript
+var util = require('util');
+var pubcontrol = require('pubcontrol');
 
-    var util = require('util');
-    var pubcontrol = require('pubcontrol');
+var HttpResponseFormat = function(body) { this.body = body; };
+util.inherits(HttpResponseFormat, pubcontrol.Format);
+HttpResponseFormat.prototype.name = function() { return 'http-response'; };
+HttpResponseFormat.prototype.export = function() { return {'body': this.body}; }
 
-    // Create publisher for endpoint
-    var pub = new pubcontrol.PubControl("http://example.com/path/to/endpoint");
+var callback = function(success, message, context) {
+    console.log("Result: " + success);
+    console.log("Message: " + message);
+    console.log("Context: ");
+    console.dir(context); };
 
-    // Define format.  Use NodeJS's utilities to inherit methods from Format.
-    var MyFormat = function(data) { this.data = data; };
-    util.inherits(MyFormat, pubcontrol.Format);
-    MyFormat.prototype.name = function() { return "my-format"; };
-    MyFormat.prototype.export = function() { return {"data": this.data}; }
+// PubControl can be initialized with or without an endpoint configuration.
+// Each endpoint can include optional JWT authentication info.
+// Multiple endpoints can be included in a single configuration.
 
-    // Publish message
-    pub.publish("test", new pubcontrol.Item(new MyFormat("hello world")), function(success, message, context) {
-        console.log(success);
-        console.log(message);
-        console.dir(context);
-    });
+// Initialize PubControl with a single endpoint:
+var pub = new pubcontrol.PubControl({
+        'uri': 'https://api.fanout.io/realm/<myrealm>',
+        'iss': '<myrealm>',
+        'key': new Buffer('<myrealmkey', 'base64')});
+
+// Add new endpoints by applying an endpoint configuration:
+pub.applyConfig([{'uri': '<myendpoint_uri_1>'},
+        {'uri': '<myendpoint_uri_2>'}]);
+
+// Remove all configured endpoints:
+pub.removeAllClients();
+
+// Explicitly add an endpoint as a PubControlClient instance:
+var pubclient = new pubcontrol.PubControlClient('<myendpoint_uri>');
+// Optionally set JWT auth: pubclient.setAuthJwt(<claim>, '<key>');
+// Optionally set basic auth: pubclient.setAuthBasic('<user>', '<password>');
+pub.addClient(pubclient);
+
+// Publish across all configured endpoints:
+pub.publish('<channel>', new pubcontrol.Item(
+        new HttpResponseFormat('Test Publish!')), callback);
+```
 
 In some cases, the EPCP endpoint requires authentication before allowing its
-use.  This library can provide Basic and JWT authentication for these cases.
-
-To use Basic authentication, use the pubcontrol.Auth.AuthBasic class:
-
-    // Create publish for endpoint using basic auth
-    var endpoint = "http://example.com/path/to/endpoint";
-    var auth = new pubcontrol.Auth.AuthBasic("username", "password");
-    var pub = new pubcontrol.PubControl(endpoint, auth);
-
-To use JWT authentication, use the pubcontrol.Auth.AuthJwt class:
-
-    // Create publish for endpoint using JWT auth
-    var endpoint = "http://example.com/path/to/endpoint";
-    var auth = new pubcontrol.Auth.AuthJwt({iss: "name"}, "secret");
-    var pub = new pubcontrol.PubControl(endpoint, auth);
+use.  This library can provide Basic and JWT authentication for these cases. To use Basic authentication instantiate a PubControlClient class, use setBasicAuth() to set the username and password, and add the PubControlClient instance to the PubControl instance via addClient() as shown in the example above. To use JWT authentication pass a configuration to PubControl when instantiating it or via applyConfig and provide the claim as shown in the example above.
 
 If the claim does not contain an exp value, then this library will create an
 appropriate value for that field on each use.  Since the header is generated
@@ -84,19 +92,12 @@ request on behalf of another service.  That service can preencode the JWT
 token and hand it to you in its string representation.  This way, that service
 does not need to hand the JWT signing key to you.
 
-    // Create publish for endpoint using JWT auth (literal token)
-    var endpoint = "http://example.com/path/to/endpoint";
-    var auth = new pubcontrol.Auth.AuthJwt("######.######.######"); // Literal JWT string
-    var pub = new pubcontrol.PubControl(endpoint, auth);
-
-Other than the above authentication schemes, this library also defines the
-AuthBase base class that declares the buildHeader() method.  If the EPCP server
-happens to require any other type of authorization header, simply create a class
-that inherits from the AuthBase class and implement its buildHeader() method
-appropriately. Then, instantiate the class and use it with the PubControl class.
+```javascript
+pubclient.setAuthJwt('######.######.######'); // Literal JWT string
+````
 
 License
 -------
 
-(C) 2014 Fanout, Inc.  
+(C) 2015 Fanout, Inc.  
 Licensed under the MIT License, see file COPYING for details.

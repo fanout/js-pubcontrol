@@ -10,7 +10,7 @@ var util = require('util');
 var pubcontrol = require('pubcontrol');
 
 // Create publisher for endpoint
-var pub = new pubcontrol.PubControl("http://example.com/path/to/endpoint");
+var pub = new pubcontrol.PubControl({uri: "http://example.com/path/to/endpoint"});
 
 // Define format
 var MyFormat = function(data) { this.data = data; };
