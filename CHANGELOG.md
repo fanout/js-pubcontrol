@@ -1,4 +1,4 @@
-nodepubcontrol CHANGE LOG
+node-pubcontrol CHANGE LOG
 =========================
 
 v 0.1.0 04-03-2013  - Initial Release. Formats, Items, Publisher, Authentication.
