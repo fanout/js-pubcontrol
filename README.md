@@ -1,4 +1,4 @@
-nodepubcontrol - PubControl for NodeJS
+node-pubcontrol - PubControl for NodeJS
 ======================================
 
 Version: v 1.0.0  
