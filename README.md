@@ -44,10 +44,16 @@ HttpResponseFormat.prototype.name = function() { return 'http-response'; };
 HttpResponseFormat.prototype.export = function() { return {'body': this.body}; }
 
 var callback = function(success, message, context) {
-    console.log("Result: " + success);
-    console.log("Message: " + message);
-    console.log("Context: ");
-    console.dir(context); };
+    if (success) {
+        console.log('Publish successful!');
+    }
+    else {
+        console.log("Publish failed!");
+        console.log("Message: " + message);
+        console.log("Context: ");
+        console.dir(context); 
+    }
+};
 
 // PubControl can be initialized with or without an endpoint configuration.
 // Each endpoint can include optional JWT authentication info.
