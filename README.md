@@ -99,7 +99,7 @@ does not need to hand the JWT signing key to you.
 
 ```javascript
 pubclient.setAuthJwt('######.######.######'); // Literal JWT string
-````
+```
 
 License
 -------
