@@ -1,6 +1,8 @@
 // publish-custom.js
 // (C) 2013 Fanout, Inc.
-// File author: Katsuyuki Ohmuro <harmony7@pex2.jp>
+// File authors:
+// Katsuyuki Ohmuro <harmony7@pex2.jp>
+// Konstantin Bokarius <kon@fanout.io>
 // Licensed under the MIT License, see file COPYING for details.
 
 // This example defines a custom format in terms of
