@@ -1,7 +1,7 @@
 PubControl for NodeJS
 ======================================
 
-Version: v 1.0.2  
+Version: v 1.0.3  
 Date: January 20th 2015  
 Authors: Katsuyuki Ohmuro <harmony7@pex2.jp>, Konstantin Bokarius <kon@fanout.io>
 

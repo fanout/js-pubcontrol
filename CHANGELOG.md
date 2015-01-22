@@ -12,3 +12,4 @@ v 0.3.5 04-02-2014  - Fix Content-Length header on POST.
 v 1.0.0 01-20-2014  - Implemented PubControlSet as PubControl and README updates.  
 v 1.0.1 01-20-2014  - Updated documentation.  
 v 1.0.2 01-20-2014  - Updated documentation.
+v 1.0.3 01-21-2014  - Fixed the pcccbhandler instance issue for callbacks.
