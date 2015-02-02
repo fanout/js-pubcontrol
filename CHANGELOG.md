@@ -14,4 +14,5 @@ v 1.0.1 01-20-2015  - Updated documentation.
 v 1.0.2 01-20-2015  - Updated documentation.  
 v 1.0.3 01-21-2015  - Fixed the pcccbhandler instance issue for callbacks.  
 v 1.0.4 01-22-2015  - Fixed a grip / pubcontrol pcccbhandler related issue.  
-v 1.0.5 02-02-2015  - Fixed a grip / pubcontrol pcccbhandler related issue.
+v 1.0.5 02-02-2015  - Updated dependency versions.  
+v 1.0.6 02-02-2015  - Cleaned up repo.  
