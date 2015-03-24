@@ -163,5 +163,63 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
 })();
 
 (function testPerformHttpRequest() {
-
+    var wasFinishHttpRequestCalled = false;
+    var wasFinishHttpRequestCalledForClose = false;
+    var wasWriteCalled = false;
+    var wasEndCalled = false;
+    var wasOnErrorCalled = false;
+    var wasCallbackCalled = false;
+    var pcc = new pubControlClient.PubControlClient('https://uri.com');
+    var callback = function(status, message, context) {
+        assert.equal(status, false);
+        assert.equal(message, 'message');
+        assert.equal(context.statusCode, -1);
+        wasCallbackCalled = true;
+    }
+    pcc.finishHttpRequest = function(mode, cb, httpData, context) {
+        assert.equal(httpData[0], 'result');
+        assert.equal(cb, callback);
+        if (mode == 'end') {
+            wasFinishHttpRequestCalled = true;
+        }
+        if (mode == 'close') {
+            wasFinishHttpRequestCalledForClose = true;
+        }
+    };
+    var transport = { request: function(rParams, resFunc) {
+            var res = { statusCode: 200, headers: {}, httpVersion: 1.1,
+                    setEncoding: function(encoding) {}, 
+                    on: function(mode, onFunc) {
+                        if (mode == 'data') {
+                            onFunc('result');
+                        }
+                        if (mode == 'end') {
+                            onFunc();
+                        }
+                        if (mode == 'close') {
+                            onFunc();
+                        }
+                    }};
+            resFunc(res);
+            return { on: function(mode, onFunc) {
+                        if (mode == 'error') {
+                            wasOnErrorCalled = true;
+                            onFunc({ message: 'message' });
+                        }
+                    },
+                    write: function(data) {
+                        assert.equal(data, 'content');
+                        wasWriteCalled = true;
+                    },
+                    end: function() {
+                        wasEndCalled = true;
+                    }};
+    }};
+    pcc.performHttpRequest('content', callback, transport, null);
+    assert(wasFinishHttpRequestCalled);
+    assert(wasFinishHttpRequestCalledForClose);
+    assert(wasWriteCalled);
+    assert(wasEndCalled);
+    assert(wasOnErrorCalled);
+    assert(wasCallbackCalled);
 })();
