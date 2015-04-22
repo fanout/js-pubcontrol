@@ -1,6 +1,6 @@
 {
     "name": "pubcontrol",
-    "version": "1.0.7",
+    "version": "1.1.0",
     "author": "Fanout, Inc. <info@fanout.io>",
     "description": "EPCP Library",
     "contributors": [
@@ -28,6 +28,7 @@
         "publish"
     ],
     "dependencies": {
+        "agentkeepalive": "2.x",
         "jwt-simple": "0.x"
     },
     "license": "MIT"

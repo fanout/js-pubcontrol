@@ -17,3 +17,4 @@ v 1.0.4 01-22-2015  - Fixed a grip / pubcontrol pcccbhandler related issue.
 v 1.0.5 02-02-2015  - Updated dependency versions.  
 v 1.0.6 02-02-2015  - Cleaned up repo.  
 v 1.0.7 03-23-2015  - Split up code into multiple files and added documentation and tests.  
+v 1.1.0 04-22-2015  - Implemented persistent HTTP and HTTPS connections.

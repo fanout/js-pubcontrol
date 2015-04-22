@@ -16,6 +16,8 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
     var pcc = new pubControlClient.PubControlClient('uri');
     assert.equal(pcc.uri, 'uri');
     assert.equal(pcc.auth, null);
+    assert.notEqual(pcc.httpKeepAliveAgent, null);
+    assert.notEqual(pcc.httpsKeepAliveAgent, null);
 })();
 
 (function testSetAuthBasic() {
@@ -88,6 +90,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
                 Buffer.byteLength(content, 'utf8'));
         assert.equal(reqParams.headers['Authorization'], 'authHeader');
         assert.equal(reqParams.href, 'http://uri.com/publish/');
+        assert.equal(pcc.httpKeepAliveAgent, reqParams.agent);
         wasPerformHttpRequestCalled = true;
     };
     pcc.startPubCall('http://uri.com', 'authHeader', 'items', function(){});
@@ -107,6 +110,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
                 Buffer.byteLength(content, 'utf8'));
         assert(!('Authorization' in reqParams.headers));
         assert.equal(reqParams.href, 'https://uri.com/publish/');
+        assert.equal(pcc.httpsKeepAliveAgent, reqParams.agent);
         wasPerformHttpRequestCalled = true;
     };
     pcc.startPubCall('https://uri.com', null, 'items', function() {});
