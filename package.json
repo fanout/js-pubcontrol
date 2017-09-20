@@ -1,6 +1,6 @@
 {
     "name": "pubcontrol",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "author": "Fanout, Inc. <info@fanout.io>",
     "description": "EPCP Library",
     "contributors": [
@@ -16,7 +16,7 @@
     "main": "./lib/pubcontrol",
     "repository": {
         "type": "git",
-        "url": "https://github.com/fanout/nodepubcontrol.git"
+        "url": "https://github.com/fanout/node-pubcontrol.git"
     },
     "readmeFilename": "README.md",
     "keywords": [
