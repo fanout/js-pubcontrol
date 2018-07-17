@@ -1,7 +1,5 @@
 var assert = require('assert');
 var util = require('util');
-var http = require('http');
-var https = require('https');
 var pubControlClient = require('../lib/pubcontrolclient');
 var format = require('../lib/format');
 var item = require('../lib/item');
@@ -80,16 +78,15 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
 (function testStartPubCall() {
     var pcc = new pubControlClient.PubControlClient('http://uri.com');
     var wasPerformHttpRequestCalled = false;
-    pcc.performHttpRequest = function(content, cb, transport, reqParams) {
-        assert.equal(content, JSON.stringify({'items': 'items'}));
+    pcc.performHttpRequest = function(cb, transport, uri, reqParams) {
+        assert.equal(reqParams.body, JSON.stringify({'items': 'items'}));
         assert(utilities.isFunction(cb));
-        assert.equal(transport, http);
         assert.equal(reqParams.method, 'POST');
         assert.equal(reqParams.headers['Content-Type'], 'application/json');
         assert.equal(reqParams.headers['Content-Length'],
-                Buffer.byteLength(content, 'utf8'));
+                Buffer.byteLength(reqParams.body, 'utf8'));
         assert.equal(reqParams.headers['Authorization'], 'authHeader');
-        assert.equal(reqParams.href, 'http://uri.com/publish/');
+        assert.equal(uri, 'http://uri.com/publish/');
         assert.equal(pcc.httpKeepAliveAgent, reqParams.agent);
         wasPerformHttpRequestCalled = true;
     };
@@ -100,16 +97,15 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
 (function testStartPubCallHttps() {
     var pcc = new pubControlClient.PubControlClient('https://uri.com');
     var wasPerformHttpRequestCalled = false;
-    pcc.performHttpRequest = function(content, cb, transport, reqParams) {
-        assert.equal(content, JSON.stringify({'items': 'items'}));
+    pcc.performHttpRequest = function(cb, transport, uri, reqParams) {
+        assert.equal(reqParams.body, JSON.stringify({'items': 'items'}));
         assert(utilities.isFunction(cb));
-        assert.equal(transport, https);
         assert.equal(reqParams.method, 'POST');
         assert.equal(reqParams.headers['Content-Type'], 'application/json');
         assert.equal(reqParams.headers['Content-Length'],
-                Buffer.byteLength(content, 'utf8'));
+                Buffer.byteLength(reqParams.body, 'utf8'));
         assert(!('Authorization' in reqParams.headers));
-        assert.equal(reqParams.href, 'https://uri.com/publish/');
+        assert.equal(uri, 'https://uri.com/publish/');
         assert.equal(pcc.httpsKeepAliveAgent, reqParams.agent);
         wasPerformHttpRequestCalled = true;
     };
@@ -150,7 +146,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
         assert.equal(message, JSON.stringify('result'));
         assert.equal(context.statusCode, 300);
         wasCallbackCalled = true;
-    }, ['result'], { statusCode: 300 });
+    }, 'result', { statusCode: 300 });
     assert(wasCallbackCalled);
 })();
 
@@ -162,26 +158,19 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
         assert.equal(message, 'Connection closed unexpectedly');
         assert.equal(context.statusCode, 300);
         wasCallbackCalled = true;
-    }, ['result'], { statusCode: 300 });
+    }, 'result', { statusCode: 300 });
     assert(wasCallbackCalled);
 })();
 
 (function testPerformHttpRequest() {
     var wasFinishHttpRequestCalled = false;
     var wasFinishHttpRequestCalledForClose = false;
-    var wasWriteCalled = false;
-    var wasEndCalled = false;
-    var wasOnErrorCalled = false;
-    var wasCallbackCalled = false;
     var pcc = new pubControlClient.PubControlClient('https://uri.com');
-    var callback = function(status, message, context) {
-        assert.equal(status, false);
-        assert.equal(message, 'message');
-        assert.equal(context.statusCode, -1);
-        wasCallbackCalled = true;
-    }
+
+    var doFail = true;
+
     pcc.finishHttpRequest = function(mode, cb, httpData, context) {
-        assert.equal(httpData[0], 'result');
+        assert.equal(httpData, 'result');
         assert.equal(cb, callback);
         if (mode == 'end') {
             wasFinishHttpRequestCalled = true;
@@ -190,40 +179,54 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
             wasFinishHttpRequestCalledForClose = true;
         }
     };
-    var transport = { request: function(rParams, resFunc) {
-            var res = { statusCode: 200, headers: {}, httpVersion: 1.1,
-                    setEncoding: function(encoding) {}, 
-                    on: function(mode, onFunc) {
-                        if (mode == 'data') {
-                            onFunc('result');
-                        }
-                        if (mode == 'end') {
-                            onFunc();
-                        }
-                        if (mode == 'close') {
-                            onFunc();
-                        }
-                    }};
-            resFunc(res);
-            return { on: function(mode, onFunc) {
-                        if (mode == 'error') {
-                            wasOnErrorCalled = true;
-                            onFunc({ message: 'message' });
-                        }
-                    },
-                    write: function(data) {
-                        assert.equal(data, 'content');
-                        wasWriteCalled = true;
-                    },
-                    end: function() {
-                        wasEndCalled = true;
-                    }};
-    }};
-    pcc.performHttpRequest('content', callback, transport, null);
-    assert(wasFinishHttpRequestCalled);
-    assert(wasFinishHttpRequestCalledForClose);
-    assert(wasWriteCalled);
-    assert(wasEndCalled);
-    assert(wasOnErrorCalled);
-    assert(wasCallbackCalled);
+
+    var transport = function (uri, opts) {
+        return new Promise(function (resolve, reject) {
+            assert.equal(opts.body, 'content');
+
+            if (doFail) {
+                reject({ message: 'message' })
+            } else {
+                resolve({
+                    status: 200,
+                    headers: {},
+                    text: function () {
+                        return new Promise(function (resolve) {
+                            resolve('result');
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    var callback = function(status, message, context) {
+        if (doFail) {
+            assert.equal(status, false);
+            assert.equal(message, 'message');
+            assert.equal(context.statusCode, -1);
+
+            assert(!wasFinishHttpRequestCalled);
+            assert(!wasFinishHttpRequestCalledForClose);
+
+            doFail = false;
+
+            pcc.performHttpRequest(
+                callback,
+                transport,
+                'https://uri.com/publish/',
+                {body: 'content'}
+            );
+        } else {
+            assert(wasFinishHttpRequestCalled);
+            assert(wasFinishHttpRequestCalledForClose);
+        }
+    }
+
+    pcc.performHttpRequest(
+        callback,
+        transport,
+        'https://uri.com/publish/',
+        {body: 'content'}
+    );
 })();

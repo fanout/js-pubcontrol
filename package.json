@@ -1,35 +1,36 @@
 {
-    "name": "pubcontrol",
-    "version": "1.1.1",
-    "author": "Fanout, Inc. <info@fanout.io>",
-    "description": "EPCP Library",
-    "contributors": [
-        {
-            "name": "Katsuyuki Ohmuro",
-            "email": "harmony7@pex2.jp"
-        },
-        {
-            "name": "Konstantin Bokarius",
-            "email": "kon@fanout.io"
-        }
-    ],
-    "main": "./lib/pubcontrol",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/fanout/node-pubcontrol.git"
+  "name": "pubcontrol",
+  "version": "1.1.1",
+  "author": "Fanout, Inc. <info@fanout.io>",
+  "description": "EPCP Library",
+  "contributors": [
+    {
+      "name": "Katsuyuki Ohmuro",
+      "email": "harmony7@pex2.jp"
     },
-    "readmeFilename": "README.md",
-    "keywords": [
-        "pubcontrol",
-        "fanoutpub",
-        "fanout",
-        "realtime",
-        "push",
-        "publish"
-    ],
-    "dependencies": {
-        "agentkeepalive": "2.x",
-        "jwt-simple": "0.x"
-    },
-    "license": "MIT"
+    {
+      "name": "Konstantin Bokarius",
+      "email": "kon@fanout.io"
+    }
+  ],
+  "main": "./lib/pubcontrol",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fanout/node-pubcontrol.git"
+  },
+  "readmeFilename": "README.md",
+  "keywords": [
+    "pubcontrol",
+    "fanoutpub",
+    "fanout",
+    "realtime",
+    "push",
+    "publish"
+  ],
+  "dependencies": {
+    "agentkeepalive": "2.x",
+    "jwt-simple": "0.x",
+    "node-fetch": "^2.1.2"
+  },
+  "license": "MIT"
 }
