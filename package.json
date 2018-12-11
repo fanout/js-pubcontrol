@@ -19,6 +19,12 @@
     "url": "https://github.com/fanout/node-pubcontrol.git"
   },
   "readmeFilename": "README.md",
+  "scripts": {
+    "build": "npm run build:webpack",
+    "build:webpack": "webpack --config etc/webpack/default.webpack.js",
+    "dev": "http-server dist",
+    "make:dist": "npm run build:webpack"
+  },
   "keywords": [
     "pubcontrol",
     "fanoutpub",
@@ -32,5 +38,10 @@
     "jwt-simple": "0.x",
     "node-fetch": "^2.1.2"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
 }
