@@ -21,8 +21,9 @@
   "readmeFilename": "README.md",
   "scripts": {
     "build": "npm run build:webpack",
-    "build:webpack": "webpack --config etc/webpack/default.webpack.js",
-    "dev": "http-server dist",
+    "build:webpack": "webpack --config etc/webpack/pubcontrol.webpack.js",
+    "build:webpack:analyze": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
+    "dev": "http-server dist -p 8090",
     "make:dist": "npm run build:webpack"
   },
   "keywords": [
@@ -40,8 +41,10 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "copy-webpack-plugin": "^4.6.0",
     "http-server": "^0.11.1",
     "webpack": "^4.27.1",
+    "webpack-bundle-size-analyzer": "^3.0.0",
     "webpack-cli": "^3.1.2"
   }
 }

@@ -7,6 +7,6 @@ node_modules: package.json
 	npm install
 	touch $@
 
-dist: node_modules $(SRCS) etc/webpack/default.webpack.js
+dist: node_modules $(SRCS) etc/webpack/pubcontrol.webpack.js
 	npm run make:dist
 	touch $@

@@ -1,0 +1,24 @@
+{
+  "name": "node-pubcontrol-browser-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "node-pubcontrol": "file:../../",
+    "pubcontrol": "file:../.."
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "http-server": "file:../../node_modules/http-server",
+    "webpack": "file:../../node_modules/webpack",
+    "webpack-cli": "file:../../node_modules/webpack-cli"
+  },
+  "scripts": {
+    "build": "npm run build:webpack",
+    "build:webpack": "webpack --config etc/browser-demo.webpack.js",
+    "build:webpack:watch": "webpack --config etc/browser-demo.webpack.js --watch",
+    "dev": "concurrently 'npm:http-server'",
+    "http-server": "http-server dist -p 8091",
+    "make:dist": "npm run build:webpack && cp src/index.html dist/index.html",
+    "watch": "concurrently 'npm:build:webpack:watch' 'npm:http-server'"
+  }
+}
