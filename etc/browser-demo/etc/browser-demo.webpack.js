@@ -21,7 +21,6 @@ const browserDemoWebpackConfig = {
   watchOptions: {
     ignored: /node_modules|dist|\.js/g,
   },
-  devtool: 'cheap-module-eval-source-map',
 };
 
 const browserDemoWebWorkerWebpackConfig = {

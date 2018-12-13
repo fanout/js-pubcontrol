@@ -1,4 +1,4 @@
-import * as pubcontrol from "pubcontrol"
+import { PubControl, Item, Format } from "pubcontrol"
 import { inherits } from "util"
 
 const defaultOpts = {
@@ -14,13 +14,13 @@ export const testPubcontrol = async (opts) => {
 }
 
 async function testFromReadme ({ uri, iss, key, defaultChannel }) {  
-  // const pub = new pubcontrol.PubControl({
+  // const pub = new PubControl({
   //   'uri': 'https://api.fanout.io/realm/<myrealm>',
   //   'iss': '<myrealm>',
   //   'key': new Buffer('<myrealmkey', 'base64')
   // });
-  const pub = new pubcontrol.PubControl({ uri, iss, key });
-  // var pubclient = new pubcontrol.PubControlClient('<myendpoint_uri>');
+  const pub = new PubControl({ uri, iss, key });
+  // var pubclient = new PubControlClient('<myendpoint_uri>');
   // // Optionally set JWT auth: pubclient.setAuthJwt(<claim>, '<key>');
   // // Optionally set basic auth: pubclient.setAuthBasic('<user>', '<password>');
   // pub.addClient(pubclient);
@@ -28,7 +28,7 @@ async function testFromReadme ({ uri, iss, key, defaultChannel }) {
   // Publish across all configured endpoints:
   pub.publish(
     defaultChannel,
-    new pubcontrol.Item(
+    new Item(
       new HttpResponseFormat('Test Publish!')
     ),
     function(success, message, context) {
@@ -47,7 +47,7 @@ async function testFromReadme ({ uri, iss, key, defaultChannel }) {
 
 const HttpResponseFormat = (() => {
   const HttpResponseFormatConstructor = function(body) { this.body = body; };
-  inherits(HttpResponseFormatConstructor, pubcontrol.Format);
+  inherits(HttpResponseFormatConstructor, Format);
   Object.assign(HttpResponseFormatConstructor.prototype, {
     name: function() { return 'http-response'; },
     export: function() { return {'body': this.body}; },
