@@ -7,12 +7,17 @@ default_worker="$THIS_DIR/../../dist/*.webworker.js"
 function upload_worker() {
   echo "upload_worker $@"
   worker="${1:-default_worker}"
-  curl "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" \
+  curl_out="$(curl "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/workers/script" \
     -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
     -X PUT \
     -H "X-Auth-Key: $CLOUDFLARE_AUTH_KEY" \
     -H "Content-Type:application/javascript" \
-    --data-binary "@$worker"
+    --data-binary "@$worker")"
+  curl_exit="$?"
+  if [ "$curl_exit" != "0" ]; then
+    echo "$curl_out"
+    echo "error $curl_exit uploading with curl"
+  fi
 }
 
 function require_vars () {
