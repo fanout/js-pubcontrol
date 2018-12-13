@@ -16,9 +16,11 @@
     "build": "npm run build:webpack",
     "build:webpack": "webpack --config etc/browser-demo.webpack.js",
     "build:webpack:watch": "webpack --config etc/browser-demo.webpack.js --watch",
+    "build:webpack:analyze": "webpack --config etc/browser-demo.webpack.js --profile --json | webpack-bundle-size-analyzer",
     "dev": "concurrently 'npm:http-server'",
     "http-server": "http-server dist -p 8091",
     "make:dist": "npm run build:webpack && cp src/index.html dist/index.html",
-    "watch": "concurrently 'npm:build:webpack:watch' 'npm:http-server'"
+    "watch": "concurrently 'npm:build:webpack:watch' 'npm:http-server'",
+    "workers-preview": "workers-preview < dist/pubcontrol-browser-demo.webworker.js"
   }
 }
