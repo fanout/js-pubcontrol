@@ -20,23 +20,10 @@ function upload_worker() {
   fi
 }
 
-function require_vars () {
-    missing=false
-    for var in "$@"; do
-        # echo "require_var $var=${!var}"
-        if [ -z ${!var+x} ]; then
-            echo "var is unset but required: $var"
-            missing=true
-        fi
-    done
-    if [ "$missing" == "true" ]; then
-        exit 1
-    fi
-}
-
 function main() {
-  require_vars CLOUDFLARE_EMAIL CLOUDFLARE_AUTH_KEY CLOUDFLARE_ZONE_ID
-  upload_worker $@
+    . "$THIS_DIR/./bash-functions.sh"
+    require_vars CLOUDFLARE_EMAIL CLOUDFLARE_AUTH_KEY CLOUDFLARE_ZONE_ID
+    upload_worker $@
 }
 
 main $@

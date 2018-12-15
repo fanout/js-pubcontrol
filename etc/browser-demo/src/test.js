@@ -8,9 +8,12 @@ const defaultOpts = {
   defaultChannel: 'testPubcontrol defaultOpts defaultChannel',
 }
 
-export const testPubcontrol = async (opts) => {
+export const testPubcontrol = async (opts={}) => {
   console.log('testPubcontrol', opts)
-  await testFromReadme(opts)
+  return await testFromReadme({
+    ...defaultOpts,
+    ...opts,
+  })
 }
 
 async function testFromReadme ({ uri, iss, key, defaultChannel }) {  
@@ -26,23 +29,27 @@ async function testFromReadme ({ uri, iss, key, defaultChannel }) {
   // pub.addClient(pubclient);
 
   // Publish across all configured endpoints:
-  pub.publish(
-    defaultChannel,
-    new Item(
-      new HttpResponseFormat('Test Publish!')
-    ),
-    function(success, message, context) {
-      if (success) {
-          console.log('Publish successful!');
-      }
-      else {
-          console.log('Publish failed!');
-          console.log('Message: ' + message);
-          console.log('Context: ');
-          console.dir(context); 
-      }
-    }
-  );
+  try {
+    const { message, context } = await new Promise((resolve, reject) => {
+      pub.publish(
+        defaultChannel,
+        new Item(new HttpResponseFormat('Test Publish!')),
+        (success, message, context) =>
+          success
+          ? resolve({ success, message, context })
+          : reject(Object.assign(new Error("Error publishing to PubControl"), { message, context }))
+      )
+    })  
+    console.log('Publish successful!');
+    return { message, context }
+  } catch (error) {
+    console.error("Error publishing", error)
+    console.log('Publish failed!');
+    console.log('Message: ' + message);
+    console.log('Context: ');
+    console.dir(context);
+    throw error
+  }
 }
 
 const HttpResponseFormat = (() => {
