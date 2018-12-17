@@ -28,6 +28,8 @@
     "build:webpack:analyze": "webpack-bundle-analyzer dist/stats.json -m server",
     "build:webpack:analyze-size": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
     "dev": "http-server dist -p 8090",
+    "lint": "concurrently 'npm:lint:eslint'",
+    "lint:eslint": "eslint lib/*",
     "make:dist": "npm run build:webpack",
     "prettier": "prettier --write './{lib,src}/**/*.{js,jsx,ts,tsx}'"
   },
@@ -41,12 +43,21 @@
   ],
   "dependencies": {
     "agentkeepalive": "2.x",
+    "eslint-plugin-prettier": "^3.0.0",
     "jwt-simple": "0.x",
     "node-fetch": "^2.1.2"
   },
   "license": "MIT",
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "copy-webpack-plugin": "^4.6.0",
+    "eslint": "^5.10.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "http-server": "^0.11.1",
     "prettier": "^1.15.3",
     "webpack": "^4.27.1",
