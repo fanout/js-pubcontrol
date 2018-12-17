@@ -1,6 +1,13 @@
 import { testPubcontrol } from "./test";
 
-const main = async () => {
+main();
+
+/**
+ * Main browser-demo webworker.
+ * Listen for messages from the host page.
+ * When configured for EPCP, maybe test pubcontrol with that configuration.
+ */
+async function main() {
   let state = {};
   const setState = stateUpdates => {
     state = { ...state, ...stateUpdates };
@@ -103,5 +110,3 @@ const main = async () => {
     }
   }
 };
-
-main();

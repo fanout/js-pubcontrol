@@ -1,5 +1,5 @@
 default: dist
-.PHONY: default watch cloudflare-worker-upload server
+.PHONY: default watch cloudflare-worker-upload server cloudflare
 
 SRCS = $(wildcard ./src/*.js)
 
@@ -16,6 +16,8 @@ watch:
 
 cloudflare-worker-upload: dist
 	./etc/cloudflare/upload-webworker.sh dist/pubcontrol-browser-demo.webworker.js
+
+cloudflare: cloudflare-worker-upload
 
 server: dist
 	npm run http-server

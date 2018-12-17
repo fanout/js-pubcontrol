@@ -3,8 +3,14 @@
  * This is meant to execute in a browser (it uses `window`)
  */
 
+import PubControl from "pubcontrol";
+
 main();
 
+/**
+ * Main browser-demo.
+ * Render a message and boot the web worker.
+ */
 async function main() {
   const { window } = webContext();
   if (window) {
@@ -16,18 +22,23 @@ async function main() {
   }
 }
 
+/**
+ * Render a message showing off pubcontrol.
+ * Show it wherever the html has opted into replacement.
+ */
 function render({ document }) {
-  // console.debug("rendering")
-  // document.querySelectorAll('.replace-with-pubcontrol').forEach(el => {
-  //   el.innerHTML = `
-  //   <div>
-  //     <h2>pubcontrol default export</h2>
-  //     <pre>${JSON.stringify(objectSchema(PubControl), null, 2)}</pre>
-  //   </div>
-  //   `
-  // })
+  console.debug("rendering")
+  document.querySelectorAll('.replace-with-pubcontrol').forEach(el => {
+    el.innerHTML = `
+    <div>
+      <h2>pubcontrol default export</h2>
+      <pre>${JSON.stringify(objectSchema(PubControl), null, 2)}</pre>
+    </div>
+    `
+  })
 }
 
+/** Promise of DOM ready event in the provided document */
 function windowReadiness({ document }) {
   if (document.readyState === "loading") {
     // Loading hasn't finished yet
@@ -35,8 +46,10 @@ function windowReadiness({ document }) {
       document.addEventListener("DOMContentLoaded", resolve)
     );
   }
+  // it's ready
 }
 
+/** given an object, return some JSON that describes its structure */
 function objectSchema(obj) {
   const props = Object.entries(obj).reduce(
     (reduced, [key, val]) => Object.assign(reduced, { [key]: typeof val }),
@@ -45,6 +58,7 @@ function objectSchema(obj) {
   return props;
 }
 
+/** Get web browser globals { window, document } in a blessed way, or error */
 function webContext() {
   const window = typeof global.window !== "undefined" && global.window;
   const document = typeof global.document !== "undefined" && global.document;
@@ -57,6 +71,10 @@ function webContext() {
   return context;
 }
 
+/**
+ * Create and initialize the browser-demo web worker in a DOM Worker.
+ * Send the worker some configuration from this url's query params.
+ */
 function bootWebWorker({ Worker }) {
   const webWorker = Object.assign(
     new Worker("pubcontrol-browser-demo.webworker.js"),
