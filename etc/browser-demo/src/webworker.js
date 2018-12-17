@@ -1,89 +1,107 @@
-import { testPubcontrol } from "./test"
+import { testPubcontrol } from "./test";
 
 const main = async () => {
-  let state = {}
-  const setState = (stateUpdates) => {
-    state = {...state, ...stateUpdates}
-  }
-  addEventListener('fetch', (event) => {
-    console.debug("webworker fetch event", event)
+  let state = {};
+  const setState = stateUpdates => {
+    state = { ...state, ...stateUpdates };
+  };
+  addEventListener("fetch", event => {
+    console.debug("webworker fetch event", event);
     try {
-      event.respondWith(handleRequest(event.request))
+      event.respondWith(handleRequest(event.request));
     } catch (error) {
-      return new Response("Something didn’t quite work. Error message: "+error.message, {
-        status: 500,
-      })
+      return new Response(
+        "Something didn’t quite work. Error message: " + error.message,
+        {
+          status: 500
+        }
+      );
     }
-  })
-  addEventListener('install', onInstall)
-  addEventListener('message', onMessage)
+  });
+  addEventListener("install", onInstall);
+  addEventListener("message", onMessage);
 
   async function handleRequest(request) {
-    console.log("in handleRequest")
-    const url = new URL(request.url)
-    let testPubcontrolError
-    let testPubControlResult
+    console.log("in handleRequest");
+    const url = new URL(request.url);
+    let testPubcontrolError;
+    let testPubControlResult;
     try {
-      testPubControlResult = url.searchParams.get('testPubControl')
-      ? await testPubcontrol({
-          uri: url.searchParams.get('epcp.uri'),
-          defaultChannel: url.searchParams.get('epcp.defaultChannel'),
-        })
-      : { message: "No ?testPubControl, so I didn't run anything related to epcp" }
+      testPubControlResult = url.searchParams.get("testPubControl")
+        ? await testPubcontrol({
+            uri: url.searchParams.get("epcp.uri"),
+            defaultChannel: url.searchParams.get("epcp.defaultChannel")
+          })
+        : {
+            message:
+              "No ?testPubControl, so I didn't run anything related to epcp"
+          };
     } catch (error) {
-      testPubcontrolError = error
+      testPubcontrolError = error;
     }
 
-    let formattedTestPubControlResult
+    let formattedTestPubControlResult;
     try {
-      formattedTestPubControlResult = JSON.stringify(testPubControlResult)
+      formattedTestPubControlResult = JSON.stringify(testPubControlResult);
     } catch (error) {
-      formattedTestPubControlResult = `ERROR WITH IT!! ${error.message} ${error.stack}`
+      formattedTestPubControlResult = `ERROR WITH IT!! ${error.message} ${
+        error.stack
+      }`;
     }
-    let formattedTestPubControlError
+    let formattedTestPubControlError;
     try {
-      formattedTestPubControlError = testPubcontrolError && String(testPubcontrolError.message || ".message was falsy so we used this text")
+      formattedTestPubControlError =
+        testPubcontrolError &&
+        String(
+          testPubcontrolError.message ||
+            ".message was falsy so we used this text"
+        );
     } catch (error) {
-      formattedTestPubControlError = "Error getting this error.message as string"
+      formattedTestPubControlError =
+        "Error getting this error.message as string";
     }
     const body = `
       <h1>npm pubcontrol browser-demo: webworker</h1>
       <p>It works!</p>
       <p>
-      cpcp.url: ${url.searchParams.get('epcp.uri')}
+      cpcp.url: ${url.searchParams.get("epcp.uri")}
       </p>
       <p>formattedTestPubControlResult ${formattedTestPubControlResult}</p>
       <p>formattedTestPubControlError ${formattedTestPubControlError}</p>
-    `.trim()
-  
+    `.trim();
+
     return new Response(body, {
-      headers: { 'Content-Type': 'text/html' },
-    })
+      headers: { "Content-Type": "text/html" }
+    });
   }
 
-  async function onInstall (event) {
-    consoe.debug("webworker onInstall", event)
+  async function onInstall(event) {
+    consoe.debug("webworker onInstall", event);
   }
 
-  async function onMessage (event) {
-    console.debug('Message received from main script', event.data.type, event);
+  async function onMessage(event) {
+    console.debug("Message received from main script", event.data.type, event);
     switch (event.data.type) {
-      case 'Hello':
+      case "Hello":
         postMessage({
-          type: 'HelloResponse',
+          type: "HelloResponse",
           content: `And hello to you, ${event.data.from}`
-        })
-        break
-      case 'EPCPConfiguration':
+        });
+        break;
+      case "EPCPConfiguration":
         setState({
-          epcp: event.data,
-        })
-        await testPubcontrol(event.data)
+          epcp: event.data
+        });
+        await testPubcontrol(event.data);
         break;
       default:
-        console.debug("Encountered unexpected event type", event.data.type, event)
+        console.debug(
+          "Encountered unexpected event type",
+          event.data.type,
+          event
+        );
     }
   }
-}
+};
 
-main()
+main();

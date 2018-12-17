@@ -10,6 +10,7 @@
   "devDependencies": {
     "concurrently": "^4.1.0",
     "http-server": "file:../../node_modules/http-server",
+    "prettier": "^1.15.3",
     "webpack": "file:../../node_modules/webpack",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "file:../../node_modules/webpack-cli"
@@ -24,6 +25,7 @@
     "dev": "concurrently 'npm:http-server'",
     "http-server": "http-server dist -p 8091",
     "make:dist": "npm run build:webpack && cp src/index.html dist/index.html",
+    "prettier": "prettier --write './src/**/*.{js,jsx,ts,tsx}'",
     "watch": "concurrently 'npm:build:webpack:watch' 'npm:http-server'",
     "workers-preview": "workers-preview < dist/pubcontrol-browser-demo.webworker.js"
   }
