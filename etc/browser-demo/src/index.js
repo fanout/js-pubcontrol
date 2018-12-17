@@ -65,12 +65,16 @@ function bootWebWorker ({ Worker }) {
     content: 'Hello worker. I booted you out here in pubcontrol-browser-demo.'
   })
   const url = new URL(global.location.href)
-  const epcpConfig = {
+  const epcp = {
     uri: url.searchParams.get('epcp.uri'),
     defaultChannel: url.searchParams.get('epcp.defaultChannel'),
   }
-  webWorker.postMessage({
-    type: 'EPCPConfiguration',
-    ...epcpConfig,
-  })
+  if ( ! [epcp.uri, epcp.defaultChannel].every(Boolean)) {
+    console.info("Missing one of ?epcp.uri or ?epcp.defaultChannel query params")
+  } else {
+    webWorker.postMessage({
+      type: 'EPCPConfiguration',
+      ...epcp,
+    })
+  }
 }
