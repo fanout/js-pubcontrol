@@ -31,7 +31,7 @@
     "lint": "concurrently 'npm:lint:eslint'",
     "lint:eslint": "eslint lib/*",
     "make:dist": "npm run build:webpack",
-    "prettier": "prettier --write './{lib,src}/**/*.{js,jsx,ts,tsx}'"
+    "prettier": "prettier --write './{lib,src}/**/*.{js,jsx,ts,tsx}' '.eslintrc.js'"
   },
   "keywords": [
     "pubcontrol",
