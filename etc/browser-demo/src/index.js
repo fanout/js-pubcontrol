@@ -27,15 +27,15 @@ async function main() {
  * Show it wherever the html has opted into replacement.
  */
 function render({ document }) {
-  console.debug("rendering")
-  document.querySelectorAll('.replace-with-pubcontrol').forEach(el => {
+  console.debug("rendering");
+  document.querySelectorAll(".replace-with-pubcontrol").forEach(el => {
     el.innerHTML = `
     <div>
       <h2>pubcontrol default export</h2>
       <pre>${JSON.stringify(objectSchema(PubControl), null, 2)}</pre>
     </div>
-    `
-  })
+    `;
+  });
 }
 
 /** Promise of DOM ready event in the provided document */
