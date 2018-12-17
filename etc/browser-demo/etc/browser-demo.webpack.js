@@ -3,6 +3,9 @@ const path = require("path");
 const projectRoot = path.join(__dirname, "../");
 const sourceDir = path.join(projectRoot, "./src");
 
+/**
+ * webpack config for main browser-demo entrypoint, which doesn't do much but load the web worker.
+ */
 const browserDemoWebpackConfig = {
   entry: [path.join(sourceDir, "./index")],
   mode: process.env.NODE_ENV || "production",
@@ -23,6 +26,9 @@ const browserDemoWebpackConfig = {
   }
 };
 
+/**
+ * webpack config for the web worker bundle
+ */
 const browserDemoWebWorkerWebpackConfig = {
   ...browserDemoWebpackConfig,
   entry: [path.join(sourceDir, "./webworker")],
@@ -33,4 +39,7 @@ const browserDemoWebWorkerWebpackConfig = {
   }
 };
 
+/**
+ * Export a webpack multi-config
+ */
 module.exports = [browserDemoWebpackConfig, browserDemoWebWorkerWebpackConfig];
