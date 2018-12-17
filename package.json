@@ -28,7 +28,8 @@
     "build:webpack:analyze": "webpack-bundle-analyzer dist/stats.json -m server",
     "build:webpack:analyze-size": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
     "dev": "http-server dist -p 8090",
-    "make:dist": "npm run build:webpack"
+    "make:dist": "npm run build:webpack",
+    "prettier": "prettier --write './{lib,src}/**/*.{js,jsx,ts,tsx}'"
   },
   "keywords": [
     "pubcontrol",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "copy-webpack-plugin": "^4.6.0",
     "http-server": "^0.11.1",
+    "prettier": "^1.15.3",
     "webpack": "^4.27.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-bundle-size-analyzer": "^3.0.0",
