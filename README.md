@@ -99,6 +99,11 @@ does not need to hand the JWT signing key to you.
 pubclient.setAuthJwt('######.######.######'); // Literal JWT string
 ```
 
+Running `pubcontrol` in web browsers
+-------
+
+`./etc/browser-demo` contains a demo of using webpack to build this library for the web browser, even running it in a separate service worker. The same service worker can be used with Cloudflare Workers as a way of building real-time serverless apps with fanout.io and Cloudflare Workers.
+
 License
 -------
 
