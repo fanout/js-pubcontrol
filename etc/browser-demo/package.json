@@ -4,16 +4,15 @@
   "main": "index.js",
   "sideEffects": false,
   "dependencies": {
-    "node-pubcontrol": "file:../../",
-    "pubcontrol": "file:../.."
+    "acorn": "^6.0.4"
   },
+  "bundledDependencies": [
+    "pubcontrol"
+  ],
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "http-server": "file:../../node_modules/http-server",
     "prettier": "^1.15.3",
-    "webpack": "file:../../node_modules/webpack",
-    "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-cli": "file:../../node_modules/webpack-cli"
+    "webpack-bundle-analyzer": "^3.0.3"
   },
   "scripts": {
     "build": "npm run build:webpack",
