@@ -4,15 +4,16 @@
   "main": "index.js",
   "sideEffects": false,
   "dependencies": {
-    "acorn": "^6.0.4"
+    "acorn": "^6.0.4",
+    "pubcontrol": "file:../../"
   },
-  "bundledDependencies": [
-    "pubcontrol"
-  ],
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^4.6.0",
     "prettier": "^1.15.3",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "webpack": "^4.28.0",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.1.2"
   },
   "scripts": {
     "build": "npm run build:webpack",
