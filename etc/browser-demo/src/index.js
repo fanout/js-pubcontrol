@@ -95,13 +95,12 @@ function bootWebWorker({ Worker }) {
     defaultChannel: url.searchParams.get("epcp.defaultChannel")
   };
   if (![epcp.uri, epcp.defaultChannel].every(Boolean)) {
-    console.info(
-      "Missing one of ?epcp.uri or ?epcp.defaultChannel query params"
+    console.warn(
+      "Missing one of ?epcp.uri or ?epcp.defaultChannel query params."
     );
-  } else {
-    webWorker.postMessage({
-      type: "EPCPConfiguration",
-      ...epcp
-    });
   }
+  webWorker.postMessage({
+    type: "EPCPConfiguration",
+    ...epcp
+  });
 }
