@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var assert = require('assert');
 var jwt = require('jwt-simple');
 var auth = require('../lib/auth');
