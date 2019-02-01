@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var assert = require('assert');
 var util = require('util');
 var pubcontrol = require('../lib/pubcontrol')

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var assert = require('assert');
 var utilities = require('../lib/utilities');
 var pcccbHandler = require('../lib/pcccbhandler');

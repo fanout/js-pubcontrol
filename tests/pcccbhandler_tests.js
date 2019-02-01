@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var assert = require('assert');
 var pcccbHandler = require('../lib/pcccbhandler');
 
