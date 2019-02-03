@@ -4,14 +4,8 @@ node_js:
   - "9"
   - "8"
   - "7"
-
-jobs:
-  include:
-    - stage: test
-      script:
-        - make
-    - stage: test
-      script:
-        - (cd etc/browser-demo && make)
-    - stage: test
-      script: npm run lint
+script:
+  - npm test
+  - npm run lint
+  - make
+  - (cd etc/browser-demo && make)
