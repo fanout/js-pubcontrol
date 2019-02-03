@@ -81,7 +81,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
     var wasPerformHttpRequestCalled = false;
     pcc.performHttpRequest = function(cb, transport, uri, reqParams) {
         assert.equal(reqParams.body, JSON.stringify({'items': 'items'}));
-        assert(utilities.isFunction(cb));
+        assert.equal(typeof cb, "function")
         assert.equal(reqParams.method, 'POST');
         assert.equal(reqParams.headers['Content-Type'], 'application/json');
         assert.equal(reqParams.headers['Content-Length'],
@@ -100,7 +100,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
     var wasPerformHttpRequestCalled = false;
     pcc.performHttpRequest = function(cb, transport, uri, reqParams) {
         assert.equal(reqParams.body, JSON.stringify({'items': 'items'}));
-        assert(utilities.isFunction(cb));
+        assert.equal(typeof cb, "function")
         assert.equal(reqParams.method, 'POST');
         assert.equal(reqParams.headers['Content-Type'], 'application/json');
         assert.equal(reqParams.headers['Content-Length'],

@@ -3,11 +3,6 @@ var assert = require('assert');
 var utilities = require('../lib/utilities');
 var pcccbHandler = require('../lib/pcccbhandler');
 
-(function testIsFunction() {
-    assert(!(utilities.isFunction('hello')));
-    assert(utilities.isFunction(function(){}));
-})();
-
 (function testToBuffer() {
     var buf = new Buffer('hello');
     assert.equal(buf, utilities.toBuffer(buf));
