@@ -13,7 +13,7 @@ var auth = require('../lib/auth');
     assert.equal(authBasic.user, 'user');
     assert.equal(authBasic.pass, 'pass');
     assert.equal(authBasic.buildHeader(), 'Basic ' +
-            new Buffer('user:pass').toString('base64'));
+            Buffer.from('user:pass').toString('base64'));
 })();
 
 (function testAuthJwt() {

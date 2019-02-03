@@ -47,7 +47,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
             items, cb) {
         assert.equal(uri, 'uri');
         assert.equal(authHeader, 'Basic ' +
-                new Buffer('user:pass').toString('base64'));
+                Buffer.from('user:pass').toString('base64'));
         assert.equal(JSON.stringify(items), JSON.stringify([exportedItem]));
         assert.equal(cb, 'callback');
         wasWorkerCalled = true;

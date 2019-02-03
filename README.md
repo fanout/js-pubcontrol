@@ -61,7 +61,7 @@ var callback = function(success, message, context) {
 var pub = new pubcontrol.PubControl({
         'uri': 'https://api.fanout.io/realm/<myrealm>',
         'iss': '<myrealm>',
-        'key': new Buffer('<myrealmkey', 'base64')});
+        'key': Buffer.from('<myrealmkey', 'base64')});
 
 // Add new endpoints by applying an endpoint configuration:
 pub.applyConfig([{'uri': '<myendpoint_uri_1>'},
