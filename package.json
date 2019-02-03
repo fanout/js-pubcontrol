@@ -29,7 +29,8 @@
     "build:webpack:analyze-size": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
     "dev": "http-server dist -p 8090",
     "lint": "concurrently 'npm:lint:eslint'",
-    "lint:eslint": "eslint lib/*",
+    "lint:eslint": "eslint lib/* tests/*",
+    "lint:eslint:fix": "eslint --fix lib/* tests/*",
     "make:dist": "npm run build:webpack",
     "prettier": "prettier --write './{lib,src}/**/*.{js,jsx,ts,tsx}' '.eslintrc.js'",
     "test": "./bin/test"
