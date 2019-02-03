@@ -8,11 +8,6 @@ var pcccbHandler = require('../lib/pcccbhandler');
     assert(utilities.isFunction(function(){}));
 })();
 
-(function testIsArray() {
-    assert(!(utilities.isArray('hello')));
-    assert(utilities.isArray([]));
-})();
-
 (function testToBuffer() {
     var buf = new Buffer('hello');
     assert.equal(buf, utilities.toBuffer(buf));
