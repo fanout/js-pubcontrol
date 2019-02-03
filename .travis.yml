@@ -13,3 +13,5 @@ jobs:
     - stage: test
       script:
         - (cd etc/browser-demo && make)
+    - stage: test
+      script: npm run lint
