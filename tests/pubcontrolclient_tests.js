@@ -47,7 +47,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
             items, cb) {
         assert.equal(uri, 'uri');
         assert.equal(authHeader, 'Basic ' +
-                new Buffer('user:pass').toString('base64'));
+                Buffer.from('user:pass').toString('base64'));
         assert.equal(JSON.stringify(items), JSON.stringify([exportedItem]));
         assert.equal(cb, 'callback');
         wasWorkerCalled = true;
@@ -81,7 +81,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
     var wasPerformHttpRequestCalled = false;
     pcc.performHttpRequest = function(cb, transport, uri, reqParams) {
         assert.equal(reqParams.body, JSON.stringify({'items': 'items'}));
-        assert(utilities.isFunction(cb));
+        assert.equal(typeof cb, "function")
         assert.equal(reqParams.method, 'POST');
         assert.equal(reqParams.headers['Content-Type'], 'application/json');
         assert.equal(reqParams.headers['Content-Length'],
@@ -100,7 +100,7 @@ TestFormat.prototype.export = function() { return {'body': this.body}; };
     var wasPerformHttpRequestCalled = false;
     pcc.performHttpRequest = function(cb, transport, uri, reqParams) {
         assert.equal(reqParams.body, JSON.stringify({'items': 'items'}));
-        assert(utilities.isFunction(cb));
+        assert.equal(typeof cb, "function")
         assert.equal(reqParams.method, 'POST');
         assert.equal(reqParams.headers['Content-Type'], 'application/json');
         assert.equal(reqParams.headers['Content-Length'],
