@@ -145,7 +145,7 @@ serverless apps with fanout.io and Cloudflare Workers.
 
 ## CommonJS
 
-Although this package is distributed as an EMS module, this package is a hybrid
+Although this package is distributed as an ESM module, this package is a hybrid
 package, and a CommonJS version of the library is available by specifing a deep path.
 
 ```javascript
