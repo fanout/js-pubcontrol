@@ -143,6 +143,15 @@ the web browser, even running it in a separate service worker. The same service
 worker can be used with Cloudflare Workers as a way of building real-time
 serverless apps with fanout.io and Cloudflare Workers.
 
+## CommonJS
+
+Although this package is distributed as an EMS module, this package is a hybrid
+package, and a CommonJS version of the library is available by specifing a deep path.
+
+```javascript
+const { PubControl, Format, Item } = require('@fanoutio/pubcontrol/commonjs');
+```
+
 ## License
 
 (C) 2015, 2019 Fanout, Inc.  
