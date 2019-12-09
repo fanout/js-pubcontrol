@@ -1,6 +1,8 @@
 # webpack builds to here:
 /dist
 
+/commonjs/**
+
 # Logs
 logs
 *.log
