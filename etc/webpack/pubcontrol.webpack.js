@@ -16,4 +16,15 @@ module.exports = {
         to: path.join(projectRoot, './dist/index.html')},
     ])
   ],
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+        }
+      }
+    ]
+  }
 };
