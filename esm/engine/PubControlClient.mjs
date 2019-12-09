@@ -55,7 +55,7 @@ export default class PubControlClient {
         // Build HTTP headers
         const headers = {
             "Content-Type": "application/json",
-            "Content-Length": Buffer.byteLength(content, "utf8")
+            "Content-Length": Buffer.byteLength(content, "utf8"),
         };
         if (authHeader != null) {
             headers["Authorization"] = authHeader;
@@ -66,7 +66,7 @@ export default class PubControlClient {
         const reqParams = {
             method: "POST",
             headers: headers,
-            body: content
+            body: content,
         };
         switch (parsed.protocol) {
             case "http:":
