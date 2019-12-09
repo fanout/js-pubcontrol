@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import assert from "assert";
 
-import Format from '../src/data/Format.mjs';
+import Format from '../esm/data/Format.mjs';
 
 const fmt = new Format();
 assert.equal(fmt.name(), null);

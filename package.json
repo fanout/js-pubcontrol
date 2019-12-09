@@ -13,7 +13,9 @@
       "email": "kon@fanout.io"
     }
   ],
-  "main": "./lib/pubcontrol",
+  "type": "commonjs",
+  "main": "./esm/index.mjs",
+  "module": "./esm/index.mjs",
   "sideEffects": false,
   "repository": {
     "type": "git",
@@ -29,8 +31,7 @@
     "build:webpack:analyze-size": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
     "dev": "http-server dist -p 8090",
     "lint": "npm run lint:eslint",
-    "lint:eslint": "eslint --ext=.js,.mjs src/* tests/*",
-    "make:dist": "npm run build:webpack",
+    "lint:eslint": "eslint --ext=.js,.mjs esm/* tests/*",
     "test": "./bin/test"
   },
   "keywords": [

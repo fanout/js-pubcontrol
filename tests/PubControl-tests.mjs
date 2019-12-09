@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import assert from "assert";
 
-import PubControl from "../src/engine/PubControl.mjs";
-import PubControlClient from "../src/engine/PubControlClient.mjs";
-import PublishException from "../src/data/PublishException.mjs";
+import PubControl from "../esm/engine/PubControl.mjs";
+import PubControlClient from "../esm/engine/PubControlClient.mjs";
+import PublishException from "../esm/data/PublishException.mjs";
 
 (function testInitialize() {
     let pc = new PubControl();

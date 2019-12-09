@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import assert from "assert";
 
-import Item from '../src/data/Item.mjs';
-import Format from '../src/data/Format.mjs';
-import PubControlClient from "../src/engine/PubControlClient.mjs";
-import PublishException from "../src/data/PublishException.mjs";
+import Item from '../esm/data/Item.mjs';
+import Format from '../esm/data/Format.mjs';
+import PubControlClient from "../esm/engine/PubControlClient.mjs";
+import PublishException from "../esm/data/PublishException.mjs";
 
 class TestFormat extends Format {
     body;
