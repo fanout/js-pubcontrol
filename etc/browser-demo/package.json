@@ -5,13 +5,18 @@
   "sideEffects": false,
   "dependencies": {
     "acorn": "^6.0.4",
-    "pubcontrol": "file:../../"
+    "core-js": "^3.4.8",
+    "pubcontrol": "file:../../",
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.6",
+    "buffer": "^5.4.3",
     "copy-webpack-plugin": "^4.6.0",
     "http-server": "^0.11.1",
-    "prettier": "^1.15.3",
     "webpack": "^4.28.0",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2"
@@ -23,10 +28,9 @@
     "build:webpack:watch": "webpack --config etc/browser-demo.webpack.js --watch",
     "build:webpack:analyze": "webpack-bundle-analyzer dist/stats.json -m server",
     "build:webpack:analyze-size": "webpack --config etc/browser-demo.webpack.js --profile --json | webpack-bundle-size-analyzer",
-    "dev": "concurrently 'npm:http-server'",
+    "dev": "npm run http-server",
     "http-server": "http-server dist -p 8091",
     "make:dist": "npm run build:webpack && cp src/index.html dist/index.html",
-    "prettier": "prettier --write './src/**/*.{js,jsx,ts,tsx}'",
     "watch": "concurrently 'npm:build:webpack:watch' 'npm:http-server'",
     "workers-preview": "workers-preview < dist/pubcontrol-browser-demo.webworker.js"
   }

@@ -3,6 +3,12 @@
  * This is meant to execute in a browser (it uses `window`)
  */
 
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+import { Buffer } from 'buffer';
+self.Buffer = self.Buffer || Buffer;
+
 import PubControl from "pubcontrol";
 
 main();

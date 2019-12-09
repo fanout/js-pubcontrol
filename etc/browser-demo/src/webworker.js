@@ -1,3 +1,9 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+import { Buffer } from 'buffer';
+self.Buffer = self.Buffer || Buffer;
+
 import { testPubcontrol } from "./test";
 
 main();

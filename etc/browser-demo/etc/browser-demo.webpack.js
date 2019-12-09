@@ -21,9 +21,26 @@ const browserDemoWebpackConfig = {
       }
     ])
   ],
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [ "@babel/preset-env", { useBuiltIns: "entry", corejs: 3 } ]
+            ],
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          },
+        }
+      }
+    ]
+  },
   watchOptions: {
     ignored: /node_modules|dist|\.js/g
-  }
+  },
 };
 
 /**
@@ -33,6 +50,23 @@ const browserDemoWebWorkerWebpackConfig = {
   ...browserDemoWebpackConfig,
   entry: [path.join(sourceDir, "./webworker")],
   target: "webworker",
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [ "@babel/preset-env", { useBuiltIns: "entry", corejs: 3 } ]
+            ],
+            plugins: ['@babel/plugin-proposal-class-properties']
+          },
+        }
+      }
+    ]
+  },
   output: {
     ...browserDemoWebpackConfig.output,
     filename: "pubcontrol-browser-demo.webworker.js"
