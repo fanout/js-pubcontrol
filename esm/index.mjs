@@ -9,3 +9,10 @@ export {
     Item,
     PubControl,
 };
+
+export default {
+    Auth,
+    Format,
+    Item,
+    PubControl,
+};
