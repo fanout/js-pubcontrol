@@ -1,6 +1,6 @@
 {
-  "name": "pubcontrol",
-  "version": "1.3.0",
+  "name": "@fanoutio/pubcontrol",
+  "version": "2.0.0",
   "author": "Fanout, Inc. <info@fanout.io>",
   "description": "EPCP Library",
   "contributors": [
@@ -28,11 +28,9 @@
     "build:webpack:analyze": "webpack-bundle-analyzer dist/stats.json -m server",
     "build:webpack:analyze-size": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
     "dev": "http-server dist -p 8090",
-    "lint": "concurrently 'npm:lint:eslint'",
-    "lint:eslint": "eslint lib/* tests/*",
-    "lint:eslint:fix": "eslint --fix lib/* tests/*",
+    "lint": "npm run lint:eslint",
+    "lint:eslint": "eslint --ext=.js,.mjs src/* tests/*",
     "make:dist": "npm run build:webpack",
-    "prettier": "prettier --write './{lib,src}/**/*.{js,jsx,ts,tsx}' '.eslintrc.js'",
     "test": "./bin/test"
   },
   "keywords": [
@@ -44,24 +42,16 @@
     "publish"
   ],
   "dependencies": {
-    "agentkeepalive": "2.x",
-    "eslint-plugin-prettier": "^3.0.0",
-    "jwt-simple": "0.x",
-    "node-fetch": "^2.1.2"
+    "agentkeepalive": "^4.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jwt-simple": "^0.5.6"
   },
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^4.1.0",
+    "babel-eslint": "^10.0.3",
     "copy-webpack-plugin": "^4.6.0",
-    "eslint": "^5.10.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
+    "eslint": "^6.7.2",
     "http-server": "^0.11.1",
-    "prettier": "^1.15.3",
     "webpack": "^4.27.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-bundle-size-analyzer": "^3.0.0",
