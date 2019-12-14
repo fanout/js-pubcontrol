@@ -5,12 +5,12 @@ import jwt from "jwt-simple";
 import auth from '../esm/utils/auth/index.mjs';
 
 (function testAuthBase() {
-    var authBase = new auth.Base();
+    const authBase = new auth.Base();
     assert.equal(authBase.buildHeader(), null);
 })();
 
 (function testAuthBasic() {
-    var authBasic = new auth.Basic("user", "pass");
+    const authBasic = new auth.Basic("user", "pass");
     assert.equal(authBasic.user, "user");
     assert.equal(authBasic.pass, "pass");
     assert.equal(
@@ -20,7 +20,7 @@ import auth from '../esm/utils/auth/index.mjs';
 })();
 
 (function testAuthJwt() {
-    var authJwt = new auth.Jwt("claim", "key");
+    let authJwt = new auth.Jwt("claim", "key");
     assert.equal(authJwt.claim, "claim");
     assert.equal(authJwt.key, "key");
     assert(Buffer.isBuffer(authJwt.key));
@@ -38,7 +38,7 @@ import auth from '../esm/utils/auth/index.mjs';
         "QyNjEwNjYwMX0.beCyAv3kUlIYomos527H1HrzKJbgSGewQjYzoAv0XNo"
     );
     authJwt = new auth.Jwt({ iss: "hello" }, "key==");
-    var claim = jwt.decode(authJwt.buildHeader().substring(7), "key==");
+    const claim = jwt.decode(authJwt.buildHeader().substring(7), "key==");
     assert("exp" in claim);
     assert.equal(claim["iss"], "hello");
 })();
