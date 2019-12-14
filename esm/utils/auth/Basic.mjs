@@ -1,4 +1,5 @@
 import Base from "./base.mjs";
+import { encodeBase64 } from "../bufferUtilities.mjs";
 
 export default class Basic extends Base {
     user;
@@ -15,6 +16,6 @@ export default class Basic extends Base {
     // in Basic auth format.
     buildHeader() {
         const data = this.user + ":" + this.pass;
-        return "Basic " + Buffer.from(data).toString("base64");
+        return "Basic " + encodeBase64( data );
     }
 }

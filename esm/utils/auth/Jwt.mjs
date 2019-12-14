@@ -1,5 +1,6 @@
 import jwt from 'jwt-simple';
 import Base from "./base.mjs";
+import { isBuffer, toUtf8Buffer } from "../bufferUtilities.mjs";
 
 // JWT authentication class used for building auth headers containing
 // JSON web token information in either the form of a claim and
@@ -20,7 +21,7 @@ export default class Jwt extends Base {
         } else {
             this.token = null;
             this.claim = claim;
-            this.key = key instanceof Buffer ? key : Buffer.from(String(key), "utf8");
+            this.key = isBuffer(key) ? key : toUtf8Buffer( key );
         }
     }
 
