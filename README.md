@@ -136,6 +136,15 @@ does not need to hand the JWT signing key to you.
 pubClient.setAuthJwt('######.######.######'); // Literal JWT string
 ```
 
+## Tests
+
+The tests in this package require Node.js 12 or newer to run.  This is because
+the tests run against the source JavaScript modules directly, which is
+a feature that was supported starting with Node.js 12.
+
+(The runtime will work with lower versions of node and with browsers since they
+go through a transpile step.)
+
 ## Running `pubcontrol` in web browsers
 
 `./etc/browser-demo` contains a demo of using webpack to build this library for
