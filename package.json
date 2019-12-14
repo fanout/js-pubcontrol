@@ -14,8 +14,8 @@
     }
   ],
   "type": "commonjs",
-  "main": "./esm/index.mjs",
-  "module": "./esm/index.mjs",
+  "main": "./esm/main.mjs",
+  "module": "./esm/main.mjs",
   "sideEffects": false,
   "repository": {
     "type": "git",
@@ -27,12 +27,7 @@
     "build:commonjs": "babel esm --out-dir commonjs",
     "package:commonjs": "cp ./commonjs-package.json commonjs/package.json",
     "build": "npm run build:webpack",
-    "build:webpack": "webpack --config etc/webpack/pubcontrol.webpack.js",
-    "build:webpack:stats": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json > dist/stats.json",
-    "build:webpack:watch": "webpack --config etc/webpack/pubcontrol.webpack.js --watch",
-    "build:webpack:analyze": "webpack-bundle-analyzer dist/stats.json -m server",
-    "build:webpack:analyze-size": "webpack --config etc/webpack/pubcontrol.webpack.js --profile --json | webpack-bundle-size-analyzer",
-    "dev": "http-server dist -p 8090",
+    "build:webpack": "webpack --config",
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint --ext=.js,.mjs esm/* tests/*",
     "test": "./bin/test"
@@ -46,26 +41,28 @@
     "publish"
   ],
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.7.6",
     "agentkeepalive": "^4.1.0",
+    "core-js": "^3.5.0",
     "isomorphic-fetch": "^2.2.1",
-    "jwt-simple": "^0.5.6"
+    "jwt-simple": "^0.5.6",
+    "regenerator-runtime": "^0.13.3"
   },
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/preset-env": "^7.7.6",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-extension": "^0.1.1",
-    "copy-webpack-plugin": "^4.6.0",
+    "buffer": "^5.4.3",
     "eslint": "^6.7.2",
-    "http-server": "^0.11.1",
     "rimraf": "^3.0.0",
-    "webpack": "^4.27.1",
-    "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-bundle-size-analyzer": "^3.0.0",
-    "webpack-cli": "^3.1.2"
+    "safe-buffer": "^5.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }
