@@ -72,6 +72,10 @@ const pub = new PubControl({
     'iss': '<myrealm>',
     'key': Buffer.from('<myrealmkey>', 'base64'),
 });
+
+// In a browser setting, use the following, as Buffer is not available to
+// browser scripts.
+// 'key': PubControl.base64ToBuffer('<myrealmkey>'),
 ``` 
 
 An advanced usage is to create an instance of a `PubControlClient` and add it to the
