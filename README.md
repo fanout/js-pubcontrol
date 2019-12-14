@@ -4,7 +4,7 @@ Authors: Katsuyuki Ohmuro <harmony7@pex2.jp>, Konstantin Bokarius <kon@fanout.io
 
 ## Description
 
-EPCP library for NodeJS
+An EPCP library for NodeJS
 
 HTTP Extensible Pubsub Control Protocol (EPCP) defines a generalized and
 extensible data publishing protocol using HTTP. Data is published by way of
@@ -25,7 +25,7 @@ This example illustrates the process of instantiating the PubControl publisher
 class, defining a data format, and then publishing some data.
 
 ```javascript
-import { PubControl, Format, Item } from '@fanoutio/pubcontrol';
+import PubControl, { Format, Item } from '@fanoutio/pubcontrol';
 
 // Instantiate PubControl publisher.
 const pub = new PubControl({
@@ -79,10 +79,12 @@ PubControl instance yourself.  This allows for finer tuning of authentication us
 by the client.
 
 ```javascript
+import PubControl, { PubControlClient } from '@fanoutio/pubcontrol';
+
 const pub = new PubControl();
 
 // Define the endpoint:
-const pubclient = new pubcontrol.PubControlClient('<myendpoint_uri>');
+const pubclient = new PubControlClient('<myendpoint_uri>');
 // Optionally set JWT auth: pubclient.setAuthJwt(<claim>, '<key>');
 // Optionally set basic auth: pubclient.setAuthBasic('<user>', '<password>');
 pub.addClient(pubclient);
@@ -92,7 +94,7 @@ Additionally, multiple endpoints can be included in a single configuration.
 
 ```javascript
 // Initialize PubControl with a single endpoint:
-const pub = new pubcontrol.PubControl();
+const pub = new PubControl();
 
 // Add new endpoints by applying an endpoint configuration:
 pub.applyConfig([
@@ -158,7 +160,8 @@ Although this package is distributed as an ESM module, this package is a hybrid
 package, and a CommonJS version of the library is available by specifing a deep path.
 
 ```javascript
-const { PubControl, Format, Item } = require('@fanoutio/pubcontrol/commonjs');
+const PubControl = require('@fanoutio/pubcontrol/commonjs');
+const { Format, Item } = PubControl;
 ```
 
 ## License
