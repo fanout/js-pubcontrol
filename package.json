@@ -27,7 +27,7 @@
     "build:commonjs": "babel esm --out-dir commonjs",
     "package:commonjs": "cp ./commonjs-package.json commonjs/package.json",
     "build": "npm run build:webpack",
-    "build:webpack": "webpack --config",
+    "build:webpack": "webpack",
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint --ext=.js,.mjs esm/* tests/*",
     "test": "./bin/test"
