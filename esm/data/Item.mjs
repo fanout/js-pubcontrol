@@ -36,7 +36,6 @@ export default class Item {
             obj['prev-id'] = this.prevId;
         }
 
-        obj.formats = {};
         const alreadyUsedFormatNames = new Set();
         for (const format of this.formats) {
             const name = format.name();
@@ -46,7 +45,7 @@ export default class Item {
                 );
             }
             alreadyUsedFormatNames.add(name);
-            obj.formats[name] = format.export();
+            obj[name] = format.export();
         }
 
         return obj;
