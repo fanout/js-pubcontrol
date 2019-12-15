@@ -1,5 +1,5 @@
 import jwt from 'jwt-simple';
-import Base from "./base.mjs";
+import Base from "./Base.mjs";
 import { isBuffer, toUtf8Buffer } from "../bufferUtilities.mjs";
 
 // JWT authentication class used for building auth headers containing

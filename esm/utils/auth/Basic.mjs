@@ -1,4 +1,4 @@
-import Base from "./base.mjs";
+import Base from "./Base.mjs";
 import { encodeBase64 } from "../bufferUtilities.mjs";
 
 export default class Basic extends Base {
