@@ -1,4 +1,3 @@
-#!/usr/bin/env node --experimental-modules
 import assert from "assert";
 import jwt from "jwt-simple";
 

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-for i in tests/*; do
-  "$i";
+for i in tests/*.mjs; do
+  /usr/bin/env node --experimental-modules "$i";
 done
