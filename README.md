@@ -153,15 +153,29 @@ go through a transpile step.)
 
 ## Running `pubcontrol` in web browsers
 
-`./etc/browser-demo` contains a demo of using webpack to build this library for
-the web browser, even running it in a separate service worker. The same service
+A build for browsers is available by running `npm run build` to build the
+`/browser/pubcontrol.js` artifact. This may be included as a normal `<script>`
+tag on your web page.  
+
+In this usage, `PubControl` is introduced to the global namespace.
+
+```javascript
+const pub = new PubControl({uri: "<endpoint_uri>"});
+const { Format, Item } = PubControl;
+```
+
+An example for this is included at `./demo/index.html`.  Open this page in your
+browser after you have built the `/browser/pubcontrol.js` file.  
+
+For another example, `js-pubcontrol-demo-webworkers` contains a demo of this library for
+the web browser, running it in a separate service worker. The same service
 worker can be used with Cloudflare Workers as a way of building real-time
 serverless apps with fanout.io and Cloudflare Workers.
 
 ## CommonJS
 
 Although this package is distributed as an ESM module, this package is a hybrid
-package, and a CommonJS version of the library is available by specifing a deep path.
+package, and a CommonJS version of the library is available by specifying a deep path.
 
 ```javascript
 const PubControl = require('@fanoutio/pubcontrol/commonjs');
