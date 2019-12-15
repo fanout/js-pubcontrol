@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nodepubcontrol.iml" filepath="$PROJECT_DIR$/.idea/nodepubcontrol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/js-pubcontrol.iml" filepath="$PROJECT_DIR$/.idea/js-pubcontrol.iml" />
     </modules>
   </component>
 </project>
-
