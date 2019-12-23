@@ -177,7 +177,7 @@ available by specifying a deep path.  You will also need to install the dependen
 `@babel/runtime-corejs3` directly:
 
 ```bash
-npm install @fanoutio/pubcontrol @babel/runtime-corejs3 core-js@3
+npm install @fanoutio/pubcontrol @babel/runtime-corejs3
 ```
 
 Require in your JavaScript:
