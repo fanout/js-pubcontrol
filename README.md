@@ -153,7 +153,7 @@ go through a transpile step.)
 
 ## Running `pubcontrol` in web browsers
 
-A build for browsers is available by running `npm run build` to build the
+A build for browsers is available by running `npm run build-browser` to build the
 `/browser/pubcontrol.js` artifact. This may be included as a normal `<script>`
 tag on your web page.  
 
