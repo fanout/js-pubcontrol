@@ -44,12 +44,9 @@
     "publish"
   ],
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.7.6",
     "agentkeepalive": "^4.1.0",
-    "core-js": "^3.5.0",
     "isomorphic-fetch": "^2.2.1",
-    "jwt-simple": "^0.5.6",
-    "regenerator-runtime": "^0.13.3"
+    "jwt-simple": "^0.5.6"
   },
   "license": "MIT",
   "devDependencies": {
@@ -58,11 +55,14 @@
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/preset-env": "^7.7.6",
+    "@babel/runtime-corejs3": "^7.7.6",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-module-extension": "^0.1.1",
     "buffer": "^5.4.3",
+    "core-js": "^3.5.0",
     "eslint": "^6.7.2",
+    "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.0",
     "safe-buffer": "^5.2.0",
     "webpack": "^4.41.2",
