@@ -151,11 +151,54 @@ a feature that was supported starting with Node.js 12.
 (The runtime will work with lower versions of node and with browsers since they
 go through a transpile step.)
 
-## Running `pubcontrol` in web browsers
+## Consuming this library
 
-A build for browsers is available by running `npm run build-browser` to build the
-`/browser/pubcontrol.js` artifact. This may be included as a normal `<script>`
-tag on your web page.  
+### ESM
+
+If you are using Node 12.0 or newer or building a bundle for a browser using a
+modern bundler, you can use this package as an ESM module.  Install it as an
+npm package:
+
+```bash
+npm install @fanoutio/pubcontrol
+```
+
+Import in your JavaScript:
+
+```javascript
+import PubControl, { Item, Format, } from '@fanoutio/pubcontrol';
+const pub = new PubControl({uri: "<endpoint_uri>"});
+```
+
+### CommonJS
+
+This package is a hybrid package, and a CommonJS version of the library is
+available by specifying a deep path.  You will also need to install the dependency
+`@babel/runtime-corejs3` directly:
+
+```bash
+npm install @fanoutio/pubcontrol @babel/runtime-corejs3 core-js@3
+```
+
+Require in your JavaScript:
+
+```javascript
+const PubControl = require('@fanoutio/pubcontrol/commonjs');
+const pub = new PubControl({uri: "<endpoint_uri>"});
+const { Format, Item } = PubControl;
+```
+
+### As a script tag in web browsers
+
+A build for browsers is available as the `/browser/pubcontrol.js` file in the npm package,
+or by running `npm run build-browser` to build it. This may be included as a normal `<script>`
+tag on your web page:
+
+```html
+<script src="./node_modules/@fanoutio/pubcontrol/browser/pubcontrol.js"></script>
+```
+
+Of course, you may copy the file into your project and point to it instead.
 
 In this usage, `PubControl` is introduced to the global namespace.
 
@@ -167,20 +210,9 @@ const { Format, Item } = PubControl;
 An example for this is included at `./demo/index.html`.  Open this page in your
 browser after you have built the `/browser/pubcontrol.js` file.  
 
-For another example, `js-pubcontrol-demo-webworkers` contains a demo of this library for
-the web browser, running it in a separate service worker. The same service
-worker can be used with Cloudflare Workers as a way of building real-time
-serverless apps with fanout.io and Cloudflare Workers.
+## Demos
 
-## CommonJS
-
-Although this package is distributed as an ESM module, this package is a hybrid
-package, and a CommonJS version of the library is available by specifying a deep path.
-
-```javascript
-const PubControl = require('@fanoutio/pubcontrol/commonjs');
-const { Format, Item } = PubControl;
-```
+For more examples, see the `js-pubcontrol-demos` repository.
 
 ## License
 
