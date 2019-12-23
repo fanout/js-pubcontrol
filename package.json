@@ -23,7 +23,7 @@
   },
   "readmeFilename": "README.md",
   "scripts": {
-    "prepublishOnly": "npm run build-commonjs",
+    "prepublishOnly": "npm run build-commonjs && npm run build-browser",
     "build-commonjs": "npm run build-commonjs:clean && npm run build-commonjs:build && npm run build-commonjs:package",
     "build-commonjs:clean": "rimraf commonjs",
     "build-commonjs:build": "babel esm --out-dir commonjs",
