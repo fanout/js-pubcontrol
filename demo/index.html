@@ -77,8 +77,10 @@
 
     <script>
         (function() {
+            const { Format, Item, Buffer } = PubControl;
+
             // Define a data format.
-            class HttpStreamFormat extends PubControl.Format {
+            class HttpStreamFormat extends Format {
                 message;
                 constructor(message) {
                     super();
@@ -116,14 +118,14 @@
                     config.iss = iss;
                 }
                 if (iss !== '') {
-                    config.key = PubControl.base64ToBuffer(key);
+                    config.key = Buffer.from( key, 'base64' );
                 }
 
                 // Instantiate PubControl publisher.
                 const pub = new PubControl(config);
 
                 // Publish across all configured endpoints.
-                const item = new PubControl.Item(new HttpStreamFormat(message));
+                const item = new Item(new HttpStreamFormat(message));
                 pub.publish(channel, item)
                     .then(() => {
                         writeLine('Publish successful!');

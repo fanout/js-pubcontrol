@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
     entry: './esm/main.browser.mjs',
@@ -20,10 +19,4 @@ module.exports = {
             },
         ],
     },
-    plugins: [
-        new webpack.NormalModuleReplacementPlugin(
-            /esm\/utils\/bufferUtilities\.mjs/,
-            './bufferUtilities.browser.mjs'
-        ),
-    ],
 };

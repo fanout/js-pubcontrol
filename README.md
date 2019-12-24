@@ -72,11 +72,7 @@ const pub = new PubControl({
     'iss': '<myrealm>',
     'key': Buffer.from('<myrealmkey>', 'base64'),
 });
-
-// In a browser setting, use the following, as Buffer is not available to
-// browser scripts.
-// 'key': PubControl.base64ToBuffer('<myrealmkey>'),
-``` 
+```
 
 An advanced usage is to create an instance of a `PubControlClient` and add it to the
 PubControl instance yourself.  This allows for finer tuning of authentication used
@@ -200,11 +196,12 @@ tag on your web page:
 
 Of course, you may copy the file into your project and point to it instead.
 
-In this usage, `PubControl` is introduced to the global namespace.
+In this usage, `PubControl` is introduced to the global namespace.  In addition,
+`Buffer` is exposed through a property on the `PubControl` object.
 
 ```javascript
 const pub = new PubControl({uri: "<endpoint_uri>"});
-const { Format, Item } = PubControl;
+const { Format, Item, Buffer, } = PubControl;
 ```
 
 An example for this is included at `./demo/index.html`.  Open this page in your

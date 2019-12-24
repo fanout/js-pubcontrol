@@ -1,9 +1,11 @@
+import buffer from 'buffer';
 import 'isomorphic-fetch';
 import agentkeepalive from 'agentkeepalive';
 
 import * as auth from '../utils/auth/index.mjs';
-import PublishException from "../data/PublishException.mjs";
-import { utf8ByteLength } from "../utils/bufferUtilities.mjs";
+import PublishException from '../data/PublishException.mjs';
+
+const { Buffer } = buffer;
 
 // The PubControlClient class allows consumers to publish to an endpoint of
 // their choice. The consumer wraps a Format class instance in an Item class
@@ -56,7 +58,7 @@ export default class PubControlClient {
         // Build HTTP headers
         const headers = {
             "Content-Type": "application/json",
-            "Content-Length": utf8ByteLength(content),
+            "Content-Length": Buffer.byteLength( content, "utf8"),
         };
         if (authHeader != null) {
             headers["Authorization"] = authHeader;
