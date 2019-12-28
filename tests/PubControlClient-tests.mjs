@@ -80,6 +80,25 @@ class TestFormat extends Format {
     assert(wasWorkerCalled);
 })();
 
+(async function testPublishFail() {
+    const itm = new Item(new TestFormat("bodyval", "id", "prev-id"));
+    const exportedItem = itm.export();
+    exportedItem["channel"] = "channel";
+    const pcc = new PubControlClient("uri");
+    pcc._startPubCall = async function(uri, authHeader, items) {
+        throw new PublishException('fail', null);
+    };
+    let resultEx = null;
+    await assert.rejects(async () => {
+        await pcc.publish("channel", itm);
+    }, ex => {
+        resultEx = ex;
+        return true;
+    });
+    assert(resultEx instanceof PublishException);
+    assert.strictEqual(resultEx.message, "fail");
+})();
+
 (async function testStartPubCall() {
     const pcc = new PubControlClient("http://uri.com");
     let wasPerformHttpRequestCalled = false;
@@ -129,28 +148,27 @@ class TestFormat extends Format {
         resultEx = ex;
         return true;
     });
-    assert.ok(resultEx instanceof PublishException);
+    assert(resultEx instanceof PublishException);
     assert.equal(resultEx.message, "Bad URI");
     assert.equal(resultEx.context.statusCode, -2);
 })();
 
-(async function testFinishHttpRequest() {
+(function testFinishHttpRequest() {
     const pcc = new PubControlClient("https://uri.com");
-    const result = await pcc._finishHttpRequest(
-        "end",
-        ["result"],
-        { statusCode: 200 }
-    );
-    assert.ok(result.success);
-    assert.equal(result.message, "");
-    assert.equal(result.context.statusCode, 200);
+    assert.doesNotThrow(() => {
+        pcc._finishHttpRequest(
+            "end",
+            ["result"],
+            { statusCode: 200 }
+        );
+    });
 })();
 
-(async function testFinishHttpRequestFailure() {
+(function testFinishHttpRequestFailure() {
     const pcc = new PubControlClient("https://uri.com");
     let resultEx = null;
-    await assert.rejects(async () => {
-        await pcc._finishHttpRequest( "end", "result", { statusCode: 300 } );
+    assert.throws(() => {
+        pcc._finishHttpRequest( "end", "result", { statusCode: 300 } );
     }, ex => {
         resultEx = ex;
         return true;
@@ -160,11 +178,11 @@ class TestFormat extends Format {
     assert.equal(resultEx.context.statusCode, 300);
 })();
 
-(async function testFinishHttpRequestClose() {
+(function testFinishHttpRequestClose() {
     const pcc = new PubControlClient("https://uri.com");
     let resultEx = null;
-    await assert.rejects(async () => {
-        await pcc._finishHttpRequest( "close", "result", { statusCode: 300 } );
+    assert.throws(() => {
+        pcc._finishHttpRequest( "close", "result", { statusCode: 300 } );
     }, ex => {
         resultEx = ex;
         return true;
@@ -196,28 +214,6 @@ class TestFormat extends Format {
         throw { message: "message" };
     };
 
-    const closeTransport = async (uri, opts) => {
-        assert.equal(opts.body, "content");
-        return {
-            status: 200,
-            headers: {},
-            text: async () => {
-                throw "error";
-            },
-        };
-    };
-
-    const successTransport = async (uri, opts) => {
-        assert.equal(opts.body, "content");
-        return {
-            status: 200,
-            headers: {},
-            text: async () => {
-                return "result";
-            },
-        };
-    };
-
     let resultEx = null;
     await assert.rejects(async () => {
         await pcc._performHttpRequest(failTransport, "https://uri.com/publish/", {
@@ -233,11 +229,33 @@ class TestFormat extends Format {
     assert(!wasFinishHttpRequestCalled);
     assert(!wasFinishHttpRequestCalledForClose);
 
+    const closeTransport = async (uri, opts) => {
+        assert.equal(opts.body, "content");
+        return {
+            status: 200,
+            headers: {},
+            text: async () => {
+                throw "error";
+            },
+        };
+    };
+
     await pcc._performHttpRequest(closeTransport, "https://uri.com/publish/", {
         body: "content"
     });
     assert(!wasFinishHttpRequestCalled);
     assert(wasFinishHttpRequestCalledForClose);
+
+    const successTransport = async (uri, opts) => {
+        assert.equal(opts.body, "content");
+        return {
+            status: 200,
+            headers: {},
+            text: async () => {
+                return "result";
+            },
+        };
+    };
 
     await pcc._performHttpRequest(successTransport, "https://uri.com/publish/", {
         body: "content"

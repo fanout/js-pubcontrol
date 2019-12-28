@@ -40,19 +40,18 @@ export default class PubControlClient {
     }
 
     // The publish method for publishing the specified item to the specified
-    // channel on the configured endpoint. The callback method is optional
-    // and will be passed the publishing results after publishing is complete.
-    async publish(channel, item, cb = null) {
+    // channel on the configured endpoint.
+    async publish(channel, item) {
         const i = item.export();
         i.channel = channel;
         const authHeader = this.auth != null ? this.auth.buildHeader() : null;
-        await this._startPubCall(this.uri, authHeader, [i], cb);
+        await this._startPubCall(this.uri, authHeader, [i]);
     }
 
     // An internal method for starting the work required for publishing
     // a message. Accepts the URI endpoint, authorization header, items
     // object, and optional callback as parameters.
-    async _startPubCall(uri, authHeader, items, cb = null) {
+    async _startPubCall(uri, authHeader, items) {
         // Prepare Request Body
         const content = JSON.stringify({ items: items });
         // Build HTTP headers
@@ -80,64 +79,48 @@ export default class PubControlClient {
                 break;
             default:
                 await new Promise(resolve => setTimeout(resolve, 0));
-                this._handleResult(false, 'Bad URI', { statusCode: -2 });
-                return;
+                throw new PublishException('Bad URI', { statusCode: -2 });
         }
-        await this._performHttpRequest(fetch, publishUri, reqParams, cb);
+        await this._performHttpRequest(fetch, publishUri, reqParams);
     }
 
     // An internal method for performing the HTTP request for publishing
     // a message with the specified parameters.
-    async _performHttpRequest(transport, uri, reqParams, cb = null) {
+    async _performHttpRequest(transport, uri, reqParams) {
         let res = null;
 
         try {
             res = await transport(uri, reqParams);
         } catch(err) {
-            this._handleResult(false, err.message, { statusCode: -1 });
-            return;
+            throw new PublishException(err.message, { statusCode: -1 });
         }
 
         const context = {
             statusCode: res.status,
             headers: res.headers
         };
+        let mode;
+        let data;
         try {
-            const data = await res.text();
-            await this._finishHttpRequest("end", data, context, cb);
+            mode = "end";
+            data = await res.text();
         } catch(err) {
-            await this._finishHttpRequest("close", err, context, cb);
+            mode = "close";
+            data = err;
         }
+        this._finishHttpRequest(mode, data, context);
     }
 
     // An internal method for finishing the HTTP request for publishing
     // a message.
-    async _finishHttpRequest(mode, httpData, context, cb = null) {
+    _finishHttpRequest(mode, httpData, context) {
         context.httpBody = httpData;
-        let success;
-        let message;
         if (mode === "end") {
-            success = context.statusCode >= 200 && context.statusCode < 300;
-            message = success ? "" : JSON.stringify(context.httpBody);
+            if (context.statusCode < 200 || context.statusCode >= 300) {
+                throw new PublishException(JSON.stringify(context.httpBody), context);
+            }
         } else if (mode === "close") {
-            success = false;
-            message = "Connection closed unexpectedly";
-        }
-        this._handleResult(success, message, context, cb);
-        return { success, message, context };
-    }
-
-    _handleResult(success, message, context, cb = null) {
-        if (cb != null) {
-            if (success) {
-                cb(true);
-            } else {
-                cb(false, message, context);
-            }
-        } else {
-            if (!success) {
-                throw new PublishException(message, context);
-            }
+            throw new PublishException('Connection closed unexpectedly', context);
         }
     }
 };
