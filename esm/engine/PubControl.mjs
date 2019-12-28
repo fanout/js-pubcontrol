@@ -48,27 +48,36 @@ export default class PubControl {
     // Note that a failure to publish in any of the configured PubControlClient
     // instances will result in a failure result being passed to the callback
     // method along with the first encountered error message.
-    async publish(channel, item, cb = null) {
+    publish(channel, item, cb) {
+        const publishResults = Promise.all(
+            this.clients.map(async client => Promise.resolve(client.publish(channel, item)))
+        );
 
-        try {
-            await Promise.all(
-                this.clients.map(async client => Promise.resolve(client.publish(channel, item)))
-            );
-            if (cb != null) {
-                cb(true);
-            }
-        } catch(ex) {
-            if (ex instanceof PublishException) {
-                if (cb != null) {
-                    const { message, context } = ex;
-                    cb(false, message, context);
+        if (cb == null) {
+            return Promise.resolve(publishResults);
+        }
+
+        (async() => {
+            let success;
+            let message;
+            let context;
+            try {
+                await publishResults;
+                success = true;
+            } catch(ex) {
+                if (ex instanceof PublishException) {
+                    success = false;
+                    message = ex.message;
+                    context = ex.context;
                 } else {
                     throw ex;
                 }
-            } else {
-                throw ex;
             }
-        }
-
+            if (success) {
+                cb(true);
+            } else {
+                cb(false, message, context);
+            }
+        })();
     }
 }
