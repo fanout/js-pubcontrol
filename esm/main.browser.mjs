@@ -2,12 +2,12 @@ import 'core-js';
 import 'regenerator-runtime/runtime';
 import buffer from 'buffer';
 
-import * as PubControl from './main.mjs';
+import * as main from './main.mjs';
 
-const defaultExport = PubControl['default'];
-for (const key of Object.keys(PubControl)) {
+const defaultExport = main['default'];
+for (const key of Object.keys(main)) {
     if (key !== 'default') {
-        defaultExport[key] = PubControl[key];
+        defaultExport[key] = main[key];
     }
 }
 

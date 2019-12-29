@@ -1,7 +1,9 @@
 var esModule = require('./main.js');
 
 module.exports = esModule.default;
-module.exports.Auth = esModule.Auth;
-module.exports.Format = esModule.Format;
-module.exports.Item = esModule.Item;
-module.exports.PubControlClient = esModule.PubControlClient;
+
+for (var key in esModule) {
+    if (esModule.hasOwnProperty(key) && key !== 'default') {
+        module.exports[key] = esModule[key];
+    }
+}
