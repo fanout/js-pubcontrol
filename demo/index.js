@@ -1,6 +1,6 @@
 // DEMO - Publishes test message to local Pushpin.
 // See README.md for directions on running this demo.
-const PubControl = require('../commonjs');
+const PubControl = require('../commonjs').default;
 const { Item, Format } = PubControl;
 
 // Define a data format.
