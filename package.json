@@ -14,7 +14,7 @@
     }
   ],
   "type": "commonjs",
-  "main": "./esm/main.mjs",
+  "main": "./commonjs/index.js",
   "module": "./esm/main.mjs",
   "sideEffects": false,
   "repository": {
@@ -27,7 +27,7 @@
     "build-commonjs": "npm run build-commonjs:clean && npm run build-commonjs:build && npm run build-commonjs:package",
     "build-commonjs:clean": "rimraf commonjs",
     "build-commonjs:build": "babel esm --out-dir commonjs",
-    "build-commonjs:package": "rm commonjs/main.browser.js && cp commonjs-index.js commonjs/index.js && cp ./commonjs-package.json commonjs/package.json",
+    "build-commonjs:package": "rm commonjs/main.browser.js && cp commonjs-index.js commonjs/index.js",
     "build-browser": "npm run build-browser:clean && npm run build-browser:build",
     "build-browser:clean": "rimraf browser",
     "build-browser:build": "webpack",
