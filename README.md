@@ -231,7 +231,7 @@ pushpin
 ```
 curl http://localhost:7999/stream
 ```
-6. Run the demo
+6. In another terminal window, Run the demo
 ```
 node demo test "Message"
 ```
@@ -244,5 +244,5 @@ see the `js-pubcontrol-demos` repository.
 
 ## License
 
-(C) 2015, 2019 Fanout, Inc.  
+(C) 2015, 2020 Fanout, Inc.  
 Licensed under the MIT License, see file COPYING for details.
