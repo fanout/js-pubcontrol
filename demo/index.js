@@ -30,11 +30,10 @@ console.log( 'Publish URI', uri );
 console.log( 'Channel', channel );
 console.log( 'Message', message );
 
+// Instantiate PubControl publisher.
 const config = {
     uri,
 };
-
-// Instantiate PubControl publisher.
 const pub = new PubControl(config);
 
 // Publish across all configured endpoints.
