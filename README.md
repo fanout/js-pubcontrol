@@ -204,12 +204,43 @@ const pub = new PubControl({uri: "<endpoint_uri>"});
 const { Format, Item, Buffer, } = PubControl;
 ```
 
-An example for this is included at `./demo/index.html`.  Open this page in your
-browser after you have built the `/browser/pubcontrol.js` file.  
+### Demo
 
-## Demos
+Included in this package is a demo that publishes a message using EPCP to the
+open-source Pushpin (https://pushpin.org/) server.
 
-For more examples, see the `js-pubcontrol-demos` repository.
+To run the demo:
+
+1. Clone this repository, then build the commonjs build of this library
+```
+npm install
+npm run build-commonjs
+```
+
+2. Install Pushpin (see https://pushpin.org/docs/install/)
+3. Make sure Pushpin has the default test config.
+`routes` file:
+```
+* test
+```
+4. Start Pushpin.
+```
+pushpin
+```
+5. In another terminal window, open a long-lived connection to the pushpin stream.
+```
+curl http://localhost:7999/stream
+```
+6. Run the demo
+```
+node demo test "Message"
+```
+7. In the window that you opened in step 5, you should see the test message.
+
+## Other Demos
+
+For more examples, including running pubcontrol in a browser,
+see the `js-pubcontrol-demos` repository.
 
 ## License
 
