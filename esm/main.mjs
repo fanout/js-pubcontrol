@@ -11,11 +11,4 @@ export {
     PubControlClient,
 };
 
-Object.assign(PubControl, {
-    Auth,
-    Format,
-    Item,
-    PubControlClient,
-});
-
 export default PubControl;
