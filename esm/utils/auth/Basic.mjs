@@ -1,8 +1,6 @@
-import buffer from 'buffer';
+import { Buffer } from 'buffer';
 
 import Base from './Base.mjs';
-
-const { Buffer } = buffer;
 
 export default class Basic extends Base {
     user;

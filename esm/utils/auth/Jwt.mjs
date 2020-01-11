@@ -1,9 +1,7 @@
-import buffer from 'buffer';
+import { Buffer } from 'buffer';
 import jwt from 'jwt-simple';
 
 import Base from "./Base.mjs";
-
-const { Buffer } = buffer;
 
 // JWT authentication class used for building auth headers containing
 // JSON web token information in either the form of a claim and

@@ -1,11 +1,9 @@
-import buffer from 'buffer';
+import { Buffer } from 'buffer';
 import 'isomorphic-fetch';
 import agentkeepalive from 'agentkeepalive';
 
 import * as auth from '../utils/auth/index.mjs';
 import PublishException from '../data/PublishException.mjs';
-
-const { Buffer } = buffer;
 
 // The PubControlClient class allows consumers to publish to an endpoint of
 // their choice. The consumer wraps a Format class instance in an Item class
