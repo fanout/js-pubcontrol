@@ -1,7 +1,7 @@
 import assert from "assert";
 
-import Item from '../esm/data/Item.mjs';
-import Format from '../esm/data/Format.mjs';
+import Item from '../src/data/Item.mjs';
+import Format from '../src/data/Format.mjs';
 
 class TestFormat1 extends Format {
     body;

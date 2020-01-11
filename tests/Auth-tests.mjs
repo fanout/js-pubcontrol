@@ -1,7 +1,7 @@
 import assert from "assert";
 import jwt from "jwt-simple";
 
-import auth from '../esm/utils/auth/index.mjs';
+import auth from '../src/utils/auth/index.mjs';
 
 (function testAuthBase() {
     const authBase = new auth.Base();

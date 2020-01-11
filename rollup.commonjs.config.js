@@ -5,7 +5,7 @@ import json from '@rollup/plugin-json';
 import builtins from 'builtin-modules';
 
 export default {
-    input: 'esm/main.commonjs.mjs',
+    input: 'src/main.commonjs.mjs',
     output: {
         file: 'commonjs/index.js',
         format: 'cjs'
