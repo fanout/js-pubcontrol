@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import PubControl, * as PubControlProps from './main.mjs';
-export default PubControl;
+import main, * as mainProps from './main.mjs';
+export default main;
 
-Object.assign(PubControl, PubControlProps, { Buffer });
+Object.assign(main, mainProps, { Buffer });
