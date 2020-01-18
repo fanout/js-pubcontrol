@@ -169,12 +169,8 @@ const pub = new PubControl({uri: "<endpoint_uri>"});
 ### CommonJS
 
 This package is a hybrid package, and a CommonJS version of the library is
-available by specifying a deep path.  You will also need to install the dependency
-`@babel/runtime-corejs3` directly:
-
-```bash
-npm install @fanoutio/pubcontrol @babel/runtime-corejs3
-```
+available by specifying the deep path to the `/commonjs` export when `require()`ing
+this package.  The CommonJS version of this package requires Node v8 or newer.
 
 Require in your JavaScript:
 
@@ -218,8 +214,10 @@ npm run build-commonjs
 ```
 
 2. Install Pushpin (see https://pushpin.org/docs/install/)
+
 3. Make sure Pushpin has the default test config.
-`routes` file:
+
+The `routes` file should look like this:
 ```
 * test
 ```
