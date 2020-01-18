@@ -20,12 +20,12 @@ language features such as `class` and `async`/`await`.
 
 ## [2.0.0-beta.10] - 2020-01-13
 ### Added
-- Added ESM build. Uses Rollup to build bundles for consumption as CommonJS, ESM,
+- Added ESM build. Uses Rollup (https://rollupjs.org/) to build bundles for consumption as CommonJS, ESM,
   and the Browser.
 - Added new simple NodeJS based demo that uses pushpin (https://pushpin.org).
 - Added `PublishException` class, which will be thrown when a problem occurs during a publish.
 - Added a shimmed `Buffer` object to browser build, as it is needed during JWT authorization.
-- IDE metadata for IntelliJ IDEA.  
+- IDE metadata for IntelliJ IDEA.
 
 ### Changed
 - Repository now called `js-pubcontrol` to reflect that this is useful in all types of JavaScript,
