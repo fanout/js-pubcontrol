@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "amd",  // https://github.com/Microsoft/TypeScript/issues/27117
+    "target": "es5",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "moduleResolution": "node",
+    "outFile": "./index.d.ts"
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
