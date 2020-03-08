@@ -14,6 +14,9 @@
     }
   ],
   "main": "./commonjs/main.commonjs.js",
+  "exports": {
+    "./esm": "./esm.js"
+  },
   "sideEffects": false,
   "repository": {
     "type": "git",
@@ -24,8 +27,8 @@
     "prepublishOnly": "npm run build",
     "build": "npm run build-commonjs && npm run build-browser",
     "build-commonjs": "npm run build-commonjs:clean && npm run build-commonjs:build",
-    "build-commonjs:clean": "rm -f ./index.d.ts",
-    "build-commonjs:build": "tsc -p tsconfig.json",
+    "build-commonjs:clean": "rimraf commonjs",
+    "build-commonjs:build": "tsc",
     "build-browser": "npm run build-browser:clean && npm run build-browser:build",
     "build-browser:clean": "rimraf browser",
     "build-browser:build": "rollup -c rollup.browser.config.js",
