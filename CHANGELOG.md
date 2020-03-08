@@ -1,5 +1,48 @@
-node-pubcontrol CHANGE LOG
-=========================
+# js-pubcontrol Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [Planned for 2.0.0]
+
+## [2.0.0] - 2020-03-08
+- Major update with great improvements in usability, with support for modern
+  language features such as `class` and `async`/`await`.
+
+### Added
+- Added ESM build.
+- Uses Rollup (https://rollupjs.org/) to build the borwser bundle.
+- Added new simple NodeJS based demo that uses pushpin (https://pushpin.org).
+- Added `PublishException` class, which will be thrown when a problem occurs during a publish.
+- Added a shimmed `Buffer` object to browser build, as it is needed during JWT authorization.
+- IDE metadata for IntelliJ IDEA.
+
+### Changed
+- Rewritten in TypeScript, giving annotations for IDE completion and static type checking.
+- Repository now called `js-pubcontrol` to reflect that this is useful in all types of JavaScript,
+  including the browser.
+- Now distributed as a public scoped package `@fanouio/pubcontrol`.
+- Source files and tests rewritten in modern style JavaScript
+- Source files moved from `/lib` to `/src`
+- Basic data structures now using ES6 classes.
+- Start using "changelog" over "change log" since it's the common usage.
+- Bump major version to 2 to indicate that this is a modernized new version.
+- Improved README by being more straightforward with the basic use case.
+- `PubControl.publish` API has been changed, and the callback is now optional.
+  If no callback is provided, a Promise is returned instead.
+
+### Removed
+- `PubControlClientCallbackHandler` class has been removed. Internally, the library now uses
+  `Promise.all` to keep track of calls to multiple publishing clients, making this
+  class unnecessary.
+- browser demo has been removed and moved to a separate repository.
+- Removed `Makefile`. This is superseded by the scripts section of package.json.
+
+## Older entries
 
 v 0.1.0 04-03-2013  - Initial Release. Formats, Items, Publisher, Authentication.
 v 0.1.1 04-17-2013  - Better handling of JWT key, see toBuffer() for details.  
