@@ -8,26 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [Planned for 2.0.0]
-Major update with great improvements in usability, with support for modern
-language features such as `class` and `async`/`await`.
 
-### To be Added
-- To add samples for ESM, CommonJS, Browser, and use in a Worker.
-- To add Typescript annotations for IDE completion and static type checking.
+## [2.0.0] - 2020-03-08
+- Major update with great improvements in usability, with support for modern
+  language features such as `class` and `async`/`await`.
 
-### To be Changed
-### To be Removed
-
-## [2.0.0-beta.10] - 2020-01-13
 ### Added
-- Added ESM build. Uses Rollup (https://rollupjs.org/) to build bundles for consumption as CommonJS, ESM,
-  and the Browser.
+- Added ESM build.
+- Uses Rollup (https://rollupjs.org/) to build the borwser bundle.
 - Added new simple NodeJS based demo that uses pushpin (https://pushpin.org).
 - Added `PublishException` class, which will be thrown when a problem occurs during a publish.
 - Added a shimmed `Buffer` object to browser build, as it is needed during JWT authorization.
 - IDE metadata for IntelliJ IDEA.
 
 ### Changed
+- Rewritten in TypeScript, giving annotations for IDE completion and static type checking.
 - Repository now called `js-pubcontrol` to reflect that this is useful in all types of JavaScript,
   including the browser.
 - Now distributed as a public scoped package `@fanouio/pubcontrol`.

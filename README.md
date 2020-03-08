@@ -25,7 +25,8 @@ This example illustrates the process of instantiating the PubControl publisher
 class, defining a data format, and then publishing some data.
 
 ```javascript
-import PubControl, { Format, Item } from '@fanoutio/pubcontrol';
+import PubControl from '@fanoutio/pubcontrol/esm';
+const { Format, Item } = PubControl;
 
 // Instantiate PubControl publisher.
 const pub = new PubControl({
@@ -34,16 +35,16 @@ const pub = new PubControl({
 
 // Define a data format.
 class HttpResponseFormat extends Format {
-    body;
-    constructor(body) {
+    content;
+    constructor(contentcontent) {
         super();
-        this.body = body;
+        this.content = content;
     }
     name() {
         return 'http-response';
     }
     export() {
-        return { body: this.body, };
+        return { content: this.content, };
     }
 }
 
@@ -79,7 +80,8 @@ PubControl instance yourself.  This allows for finer tuning of authentication us
 by the client.
 
 ```javascript
-import PubControl, { PubControlClient } from '@fanoutio/pubcontrol';
+import PubControl from '@fanoutio/pubcontrol/esm';
+const { PubControlClient } = PubControl;
 
 const pub = new PubControl();
 
@@ -166,18 +168,22 @@ import PubControl, { Item, Format, } from '@fanoutio/pubcontrol';
 const pub = new PubControl({uri: "<endpoint_uri>"});
 ```
 
-### CommonJS
+### ESM
 
-This package is a hybrid package, and a CommonJS version of the library is
-available by specifying the deep path to the `/commonjs` export when `require()`ing
-this package.  The CommonJS version of this package requires Node v8 or newer.
+This package is a hybrid package, and an ESM version of the library is
+available by specifying the deep path to the `/esm` export when importing
+this package.
+
+### CommonJS  
+
+The CommonJS version of this package requires Node v8 or newer.
 
 Require in your JavaScript:
 
 ```javascript
-const PubControl = require('@fanoutio/pubcontrol/commonjs');
-const pub = new PubControl({uri: "<endpoint_uri>"});
+const PubControl = require('@fanoutio/pubcontrol');
 const { Format, Item } = PubControl;
+const pub = new PubControl({uri: "<endpoint_uri>"});
 ```
 
 ### As a script tag in web browsers
