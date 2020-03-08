@@ -1,14 +1,22 @@
+import IPubControlItemFormat from "./IPubControlItemFormat";
+import IPubControlItemExported from "./IPubControlItemExported";
+
 // The Item class is a container used to contain one or more format
 // implementation instances where each implementation instance is of a
 // different type of format. An Item instance may not contain multiple
 // implementations of the same type of format. An Item instance is then
 // serialized into a hash that is used for publishing to clients.
-export default class Item {
-    formats;
-    id;
-    prevId;
 
-    constructor(formats, id, prevId) {
+export default class Item {
+    public formats: IPubControlItemFormat[];
+    public id?: string;
+    public prevId?: string;
+
+    constructor(
+        formats: IPubControlItemFormat | IPubControlItemFormat[],
+        id?: string,
+        prevId?: string
+    ) {
         // The initialize method can accept either a single Format implementation
         // instance or an array of Format implementation instances. Optionally
         // specify an ID and/or previous ID to be sent as part of the message
@@ -27,8 +35,10 @@ export default class Item {
     // into a hash that is used for publishing to clients. If more than one
     // instance of the same type of Format implementation was specified then
     // an error will be raised.
-    export() {
-        const obj = {};
+    export(): IPubControlItemExported {
+        const obj: IPubControlItemExported = {
+            exports: {},
+        };
         if (this.id != null) {
             obj.id = this.id;
         }

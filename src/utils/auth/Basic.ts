@@ -1,12 +1,12 @@
 import { Buffer } from 'buffer';
 
-import Base from './Base.mjs';
+import Base from './Base';
 
 export default class Basic extends Base {
-    user;
-    pass;
+    public user: string;
+    public pass: string;
 
-    constructor(user, pass) {
+    constructor(user: string, pass: string) {
         super();
         // Initialize with a username and password.
         this.user = user;
@@ -15,7 +15,7 @@ export default class Basic extends Base {
 
     // Returns the auth header containing the username and password
     // in Basic auth format.
-    buildHeader() {
+    buildHeader(): string {
         const data = this.user + ":" + this.pass;
         return "Basic " + Buffer.from( data ).toString( 'base64' );
     }

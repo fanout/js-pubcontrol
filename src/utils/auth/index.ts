@@ -1,6 +1,6 @@
-import Base from './Base.mjs';
-import Basic from './Basic.mjs';
-import Jwt from './Jwt.mjs';
+import Base from './Base';
+import Basic from './Basic';
+import Jwt from './Jwt';
 
 export {
     Base,

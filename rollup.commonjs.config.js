@@ -1,10 +1,10 @@
 import commonjs from '@rollup/plugin-commonjs';
-import babel from 'rollup-plugin-babel';
 import json from '@rollup/plugin-json';
 import builtins from 'builtin-modules';
+import typescript from '@rollup/plugin-typescript';
 
 export default {
-    input: 'src/main.commonjs.mjs',
+    input: 'src/main.commonjs.ts',
     output: {
         file: 'commonjs/index.js',
         format: 'cjs'
@@ -12,13 +12,7 @@ export default {
     plugins: [
         commonjs(),
         json(),
-        babel({
-            babelrc: false,
-            exclude: 'node_modules/**',　// only transpile our source code
-            plugins: [
-                '@babel/plugin-proposal-class-properties',
-            ],
-        }),
+        typescript({lib: ["es5", "dom"], esModuleInterop: true, target: "es5"}),
     ],
     external: [
         ...builtins,

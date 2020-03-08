@@ -1,9 +1,30 @@
 import { Buffer } from 'buffer';
 import 'isomorphic-fetch';
-import agentkeepalive from 'agentkeepalive';
+import HttpAgent, { HttpsAgent } from 'agentkeepalive';
 
-import * as auth from '../utils/auth/index.mjs';
-import PublishException from '../data/PublishException.mjs';
+import * as auth from '../utils/auth/index';
+import PublishException from '../data/PublishException';
+
+import IAuth from "../utils/auth/IAuth";
+import Item from "../data/Item";
+import IPubControlItemExported from "../data/IPubControlItemExported";
+
+interface IHeaders {
+    [name: string]: string;
+}
+interface IReqParams {
+    method: string;
+    headers: IHeaders;
+    body: string;
+    agent?: HttpAgent;
+}
+interface FetchResponse {
+    status: number;
+    headers: object;
+    httpBody?: any;
+    text: () => Promise<string>;
+}
+type Transport = (url: string, reqParams: IReqParams) => Promise<FetchResponse>;
 
 // The PubControlClient class allows consumers to publish to an endpoint of
 // their choice. The consumer wraps a Format class instance in an Item class
@@ -11,35 +32,33 @@ import PublishException from '../data/PublishException.mjs';
 // an optional callback parameter that is called after the publishing is
 // complete to notify the consumer of the result.
 export default class PubControlClient {
-    uri;
-    auth = null;
-    httpKeepAliveAgent = new agentkeepalive();
-    httpsKeepAliveAgent = new agentkeepalive.HttpsAgent();
+    public uri: string;
+    public auth?: IAuth;
+    public httpKeepAliveAgent: HttpAgent = new HttpAgent();
+    public httpsKeepAliveAgent: HttpsAgent = new HttpsAgent();
 
-    constructor(uri) {
+    constructor(uri: string) {
         // Initialize this class with a URL representing the publishing endpoint.
         this.uri = uri.replace(/\/$/, "");
     }
 
     // Call this method and pass a username and password to use basic
     // authentication with the configured endpoint.
-    setAuthBasic(username, password) {
+    setAuthBasic(username: string, password: string) {
         this.auth = new auth.Basic(username, password);
     }
 
     // Call this method and pass a claim and key to use JWT authentication
     // with the configured endpoint.
-    setAuthJwt(claim, key) {
-        if (key) {
-            this.auth = new auth.Jwt(claim, key);
-        } else {
-            this.auth = new auth.Jwt(claim);
-        }
+    setAuthJwt(token: string): void;
+    setAuthJwt(claim: object, key?: Buffer | string): void;
+    setAuthJwt(...args: [any]): void {
+        this.auth = new auth.Jwt(...args);
     }
 
     // The publish method for publishing the specified item to the specified
     // channel on the configured endpoint.
-    async publish(channel, item) {
+    async publish(channel: string, item: Item) {
         const i = item.export();
         i.channel = channel;
         const authHeader = this.auth != null ? this.auth.buildHeader() : null;
@@ -49,13 +68,13 @@ export default class PubControlClient {
     // An internal method for starting the work required for publishing
     // a message. Accepts the URI endpoint, authorization header, items
     // object, and optional callback as parameters.
-    async _startPubCall(uri, authHeader, items) {
+    async _startPubCall(uri: string, authHeader: string | null, items: object[]) {
         // Prepare Request Body
         const content = JSON.stringify({ items: items });
         // Build HTTP headers
-        const headers = {
+        const headers: IHeaders = {
             "Content-Type": "application/json",
-            "Content-Length": Buffer.byteLength( content, "utf8"),
+            "Content-Length": "" + Buffer.byteLength( content, "utf8"),
         };
         if (authHeader != null) {
             headers["Authorization"] = authHeader;
@@ -63,10 +82,11 @@ export default class PubControlClient {
         // Build HTTP request parameters
         const publishUri = uri + "/publish/";
         const parsed = new URL(publishUri);
-        const reqParams = {
+        const reqParams: IReqParams = {
             method: "POST",
             headers: headers,
             body: content,
+            agent: undefined,
         };
         switch (parsed.protocol) {
             case "http:":
@@ -84,7 +104,7 @@ export default class PubControlClient {
 
     // An internal method for performing the HTTP request for publishing
     // a message with the specified parameters.
-    async _performHttpRequest(transport, uri, reqParams) {
+    async _performHttpRequest(transport: Transport, uri: string, reqParams: IReqParams) {
         let res = null;
 
         try {
@@ -111,7 +131,7 @@ export default class PubControlClient {
 
     // An internal method for finishing the HTTP request for publishing
     // a message.
-    _finishHttpRequest(mode, httpData, context) {
+    _finishHttpRequest(mode: string, httpData: any, context: any) {
         context.httpBody = httpData;
         if (mode === "end") {
             if (context.statusCode < 200 || context.statusCode >= 300) {

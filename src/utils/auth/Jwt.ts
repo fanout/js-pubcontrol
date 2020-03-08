@@ -1,28 +1,30 @@
 import { Buffer } from 'buffer';
-import jwt from 'jwt-simple';
+import { encode } from 'jwt-simple';
 
-import Base from "./Base.mjs";
+import Base from "./Base";
 
 // JWT authentication class used for building auth headers containing
 // JSON web token information in either the form of a claim and
 // corresponding key, or the literal token itself.
 export default class Jwt extends Base {
-    token;
-    claim;
-    key;
+    public token?: string;
+    public claim?: object;
+    public key?: Buffer;
 
-    constructor(claim, key) {
+    constructor(token: string);
+    constructor(claim: object, key: Buffer | string);
+    constructor(...args: any[]) {
         super();
         // Initialize with the specified claim and key. If only one parameter
         // was provided then treat it as the literal token.
-        if (arguments.length === 1) {
-            this.token = claim;
-            this.claim = null;
-            this.key = null;
+        if (args.length == 1) {
+            this.token = <string>args[0];
+            this.claim = undefined;
+            this.key = undefined;
         } else {
-            this.token = null;
-            this.claim = claim;
-            this.key = key instanceof Buffer ? key : Buffer.from( String(key), "utf8" );
+            this.token = undefined;
+            this.claim = <object>args[0];
+            this.key = args[1] instanceof Buffer ? args[1] : Buffer.from( String(args[1]), "utf8" );
         }
     }
 
@@ -33,12 +35,13 @@ export default class Jwt extends Base {
             token = this.token;
         } else {
             const claim =
-                "exp" in this.claim ?
+                this.claim != null && "exp" in this.claim ?
                     this.claim :
                     Object.assign({}, this.claim, {
                         exp: Math.floor(new Date().getTime() / 1000) + 600
                     });
-            token = jwt.encode(claim, this.key);
+            // @ts-ignore
+            token = encode(claim, this.key);
         }
         return "Bearer " + token;
     }

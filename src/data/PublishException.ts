@@ -1,8 +1,8 @@
 export default class PublishException {
-    message;
-    context;
+    message: string;
+    context: any;
 
-    constructor(message, context) {
+    constructor(message: string, context: any) {
         this.message = message;
         this.context = context;
     }

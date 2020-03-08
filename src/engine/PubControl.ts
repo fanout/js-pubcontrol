@@ -1,5 +1,14 @@
-import PubControlClient from "./PubControlClient.mjs";
-import PublishException from "../data/PublishException.mjs";
+import PubControlClient from "./PubControlClient";
+import PublishException from "../data/PublishException";
+import Item from "../data/Item";
+
+interface IPubControlConfig {
+    uri: string;
+    iss?: string;
+    key?: string;
+}
+
+type IPubControlPublishCallback = (status: boolean, message?: string, context?: any) => void;
 
 // The PubControl class allows a consumer to manage a set of publishing
 // endpoints and to publish to all of those endpoints via a single publish
@@ -7,9 +16,9 @@ import PublishException from "../data/PublishException.mjs";
 // hash or array of hashes containing configuration information or by
 // manually adding PubControlClient instances.
 export default class PubControl {
-    clients = [];
+    public clients: PubControlClient[] = [];
 
-    constructor(config = []) {
+    constructor(config?: IPubControlConfig | IPubControlConfig[]) {
         // Initialize with or without a configuration. A configuration can be applied
         // after initialization via the apply_config method.
         this.applyConfig(config);
@@ -19,7 +28,7 @@ export default class PubControl {
         this.clients = [];
     }
     // Add the specified PubControlClient instance.
-    addClient(client) {
+    addClient(client: PubControlClient) {
         this.clients.push(client);
     }
     // Apply the specified configuration to this PubControl instance. The
@@ -27,7 +36,7 @@ export default class PubControl {
     // each hash corresponds to a single PubControlClient instance. Each hash
     // will be parsed and a PubControlClient will be created either using just
     // a URI or a URI and JWT authentication information.
-    applyConfig(config) {
+    applyConfig(config: IPubControlConfig | IPubControlConfig[] = []) {
 
         const configsArray = Array.isArray(config) ? config : [config];
 
@@ -48,7 +57,7 @@ export default class PubControl {
     // Note that a failure to publish in any of the configured PubControlClient
     // instances will result in a failure result being passed to the callback
     // method along with the first encountered error message.
-    publish(channel, item, cb) {
+    publish(channel: string, item: Item, cb?: IPubControlPublishCallback) {
         const publishResults = Promise.all(
             this.clients.map(async client => Promise.resolve(client.publish(channel, item)))
         );
