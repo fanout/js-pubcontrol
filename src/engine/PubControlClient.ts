@@ -32,10 +32,10 @@ type Transport = (url: string, reqParams: IReqParams) => Promise<FetchResponse>;
 // an optional callback parameter that is called after the publishing is
 // complete to notify the consumer of the result.
 export default class PubControlClient {
-    public uri: string;
+    public uri?: string;
     public auth?: IAuth;
-    public httpKeepAliveAgent: HttpAgent = new HttpAgent();
-    public httpsKeepAliveAgent: HttpsAgent = new HttpsAgent();
+    public httpKeepAliveAgent?: HttpAgent = new HttpAgent();
+    public httpsKeepAliveAgent?: HttpsAgent = new HttpsAgent();
 
     constructor(uri: string) {
         // Initialize this class with a URL representing the publishing endpoint.
@@ -58,7 +58,7 @@ export default class PubControlClient {
 
     // The publish method for publishing the specified item to the specified
     // channel on the configured endpoint.
-    async publish(channel: string, item: Item) {
+    async publish(channel: string, item: Item): Promise<void> {
         const i = item.export();
         i.channel = channel;
         const authHeader = this.auth != null ? this.auth.buildHeader() : null;
@@ -68,7 +68,7 @@ export default class PubControlClient {
     // An internal method for starting the work required for publishing
     // a message. Accepts the URI endpoint, authorization header, items
     // object, and optional callback as parameters.
-    async _startPubCall(uri: string, authHeader: string | null, items: object[]) {
+    async _startPubCall(uri: string, authHeader: string | null, items: IPubControlItemExported[]) {
         // Prepare Request Body
         const content = JSON.stringify({ items: items });
         // Build HTTP headers

@@ -1,21 +1,23 @@
 import assert from "assert";
 
-import Item from '../src/data/Item.mjs';
-import Format from '../src/data/Format.mjs';
-import PubControlClient from "../src/engine/PubControlClient.mjs";
-import PublishException from "../src/data/PublishException.mjs";
+import Item from '../src/data/Item';
+import Format from '../src/data/Format';
+import PubControlClient from "../src/engine/PubControlClient";
+import PublishException from "../src/data/PublishException";
+import Basic from "../src/utils/auth/Basic";
+import Jwt from "../src/utils/auth/Jwt";
 
 class TestFormat extends Format {
-    body;
-    constructor(body) {
+    content;
+    constructor(content) {
         super();
-        this.body = body;
+        this.content = content;
     }
     name() {
         return 'testformat';
     }
     export() {
-        return { body: this.body };
+        return { content: this.content };
     }
 }
 
@@ -30,23 +32,24 @@ class TestFormat extends Format {
 (function testSetAuthBasic() {
     const pcc = new PubControlClient("uri");
     pcc.setAuthBasic("user", "pass");
-    assert.equal(pcc.auth.user, "user");
-    assert.equal(pcc.auth.pass, "pass");
+    assert.equal((<Basic>pcc.auth).user, "user");
+    assert.equal((<Basic>pcc.auth).pass, "pass");
 })();
 
 (function testSetAuthJwt() {
     let pcc = new PubControlClient("uri");
-    pcc.setAuthJwt("claim", "key");
-    assert.equal(pcc.auth.claim, "claim");
-    assert.equal(pcc.auth.key, "key");
+    const claim = {};
+    pcc.setAuthJwt(claim, "key");
+    assert.equal((<Jwt>pcc.auth).claim, claim);
+    assert.equal((<Jwt>pcc.auth).key, "key");
     pcc = new PubControlClient("uri");
     pcc.setAuthJwt("token");
-    assert.equal(pcc.auth.token, "token");
+    assert.equal((<Jwt>pcc.auth).token, "token");
 })();
 
 (async function testPublish() {
     let wasWorkerCalled = false;
-    const itm = new Item(new TestFormat("bodyval", "id", "prev-id"));
+    const itm = new Item(new TestFormat("bodyval"));
     const exportedItem = itm.export();
     exportedItem["channel"] = "channel";
     const pcc = new PubControlClient("uri");
@@ -66,7 +69,7 @@ class TestFormat extends Format {
 
 (async function testPublishNoAuth() {
     let wasWorkerCalled = false;
-    const itm = new Item(new TestFormat("bodyval", "id", "prev-id"));
+    const itm = new Item(new TestFormat("bodyval"));
     const exportedItem = itm.export();
     exportedItem["channel"] = "channel";
     const pcc = new PubControlClient("uri");
@@ -81,7 +84,7 @@ class TestFormat extends Format {
 })();
 
 (async function testPublishFail() {
-    const itm = new Item(new TestFormat("bodyval", "id", "prev-id"));
+    const itm = new Item(new TestFormat("bodyval"));
     const exportedItem = itm.export();
     exportedItem["channel"] = "channel";
     const pcc = new PubControlClient("uri");
@@ -101,9 +104,10 @@ class TestFormat extends Format {
 
 (async function testStartPubCall() {
     const pcc = new PubControlClient("http://uri.com");
+    const testItems = [];
     let wasPerformHttpRequestCalled = false;
     pcc._performHttpRequest = async function(transport, uri, reqParams) {
-        assert.equal(reqParams.body, JSON.stringify({ items: "items" }));
+        assert.equal(reqParams.body, JSON.stringify({ items: testItems }));
         assert.equal(reqParams.method, "POST");
         assert.equal(reqParams.headers["Content-Type"], "application/json");
         assert.equal(
@@ -115,15 +119,16 @@ class TestFormat extends Format {
         assert.equal(pcc.httpKeepAliveAgent, reqParams.agent);
         wasPerformHttpRequestCalled = true;
     };
-    await pcc._startPubCall("http://uri.com", "authHeader", "items");
+    await pcc._startPubCall("http://uri.com", "authHeader", testItems);
     assert(wasPerformHttpRequestCalled);
 })();
 
 (async function testStartPubCallHttps() {
     const pcc = new PubControlClient("https://uri.com");
+    const testItems = [];
     let wasPerformHttpRequestCalled = false;
     pcc._performHttpRequest = async function(transport, uri, reqParams) {
-        assert.equal(reqParams.body, JSON.stringify({ items: "items" }));
+        assert.equal(reqParams.body, JSON.stringify({ items: testItems }));
         assert.equal(reqParams.method, "POST");
         assert.equal(reqParams.headers["Content-Type"], "application/json");
         assert.equal(
@@ -135,15 +140,16 @@ class TestFormat extends Format {
         assert.equal(pcc.httpsKeepAliveAgent, reqParams.agent);
         wasPerformHttpRequestCalled = true;
     };
-    await pcc._startPubCall("https://uri.com", null, "items");
+    await pcc._startPubCall("https://uri.com", null, testItems);
     assert(wasPerformHttpRequestCalled);
 })();
 
 (async function testStartPubCallBadUri() {
     const pcc = new PubControlClient("https://uri.com");
+    const testItems = [];
     let resultEx = null;
     await assert.rejects(async () => {
-        await pcc._startPubCall("file://uri.com", null, "items");
+        await pcc._startPubCall("file://uri.com", null, testItems);
     }, ex => {
         resultEx = ex;
         return true;
@@ -217,6 +223,9 @@ class TestFormat extends Format {
     let resultEx = null;
     await assert.rejects(async () => {
         await pcc._performHttpRequest(failTransport, "https://uri.com/publish/", {
+            agent: undefined,
+            headers: undefined,
+            method: "",
             body: "content"
         });
     }, ex => {
@@ -241,6 +250,9 @@ class TestFormat extends Format {
     };
 
     await pcc._performHttpRequest(closeTransport, "https://uri.com/publish/", {
+        agent: undefined,
+        headers: undefined,
+        method: "",
         body: "content"
     });
     assert(!wasFinishHttpRequestCalled);
@@ -258,6 +270,9 @@ class TestFormat extends Format {
     };
 
     await pcc._performHttpRequest(successTransport, "https://uri.com/publish/", {
+        agent: undefined,
+        headers: undefined,
+        method: "",
         body: "content"
     });
     assert(wasFinishHttpRequestCalled);

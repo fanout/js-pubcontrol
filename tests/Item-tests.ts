@@ -1,33 +1,33 @@
 import assert from "assert";
 
-import Item from '../src/data/Item.mjs';
-import Format from '../src/data/Format.mjs';
+import Item from '../src/data/Item';
+import Format from '../src/data/Format';
 
 class TestFormat1 extends Format {
-    body;
-    constructor(body) {
+    content;
+    constructor(content) {
         super();
-        this.body = body;
+        this.content = content;
     }
     name() {
         return 'testformat1';
     }
     export() {
-        return { body: this.body };
+        return { content: this.content };
     }
 }
 
 class TestFormat2 extends Format {
-    body;
-    constructor(body) {
+    content;
+    constructor(content) {
         super();
-        this.body = body;
+        this.content = content;
     }
     name() {
         return 'testformat2';
     }
     export() {
-        return { body: this.body };
+        return { content: this.content };
     }
 }
 
@@ -55,18 +55,18 @@ const fmt2a = new TestFormat2("body2a");
     assert(!("prev-id" in itm.export()));
     assert.equal(
         JSON.stringify(itm.export()["testformat1"]),
-        JSON.stringify({ body: "body1a" })
+        JSON.stringify({ content: "body1a" })
     );
     itm = new Item([fmt1a, fmt2a]);
     assert(!("id" in itm.export()));
     assert(!("prev-id" in itm.export()));
     assert.equal(
         JSON.stringify(itm.export()["testformat1"]),
-        JSON.stringify({ body: "body1a" })
+        JSON.stringify({ content: "body1a" })
     );
     assert.equal(
         JSON.stringify(itm.export()["testformat2"]),
-        JSON.stringify({ body: "body2a" })
+        JSON.stringify({ content: "body2a" })
     );
     assert.throws(function() {
         itm = new Item([fmt1a, fmt1a]);
@@ -77,6 +77,6 @@ const fmt2a = new TestFormat2("body2a");
     assert.equal(itm.export()["prev-id"], "prev-id");
     assert.equal(
         JSON.stringify(itm.export()["testformat1"]),
-        JSON.stringify({ body: "body1a" })
+        JSON.stringify({ content: "body1a" })
     );
 })();

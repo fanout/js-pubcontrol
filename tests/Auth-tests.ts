@@ -1,12 +1,7 @@
 import assert from "assert";
 import jwt from "jwt-simple";
 
-import auth from '../src/utils/auth/index.mjs';
-
-(function testAuthBase() {
-    const authBase = new auth.Base();
-    assert.equal(authBase.buildHeader(), null);
-})();
+import auth from '../src/utils/auth/index';
 
 (function testAuthBasic() {
     const authBasic = new auth.Basic("user", "pass");
@@ -19,8 +14,9 @@ import auth from '../src/utils/auth/index.mjs';
 })();
 
 (function testAuthJwt() {
-    let authJwt = new auth.Jwt("claim", "key");
-    assert.equal(authJwt.claim, "claim");
+    const cl = {};
+    let authJwt = new auth.Jwt(cl, "key");
+    assert.equal(authJwt.claim, cl);
     assert.equal(authJwt.key, "key");
     assert(Buffer.isBuffer(authJwt.key));
     assert.equal(authJwt.token, null);
