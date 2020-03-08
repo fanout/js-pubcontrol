@@ -1,6 +1,6 @@
 {
   "name": "@fanoutio/pubcontrol",
-  "version": "2.0.0-beta.10",
+  "version": "2.0.0-beta.12",
   "author": "Fanout, Inc. <info@fanout.io>",
   "description": "EPCP Library",
   "contributors": [
@@ -13,8 +13,7 @@
       "email": "kon@fanout.io"
     }
   ],
-  "main": "./commonjs/index.js",
-  "types": "./index.d.ts",
+  "main": "./commonjs/main.commonjs.js",
   "sideEffects": false,
   "repository": {
     "type": "git",
@@ -23,16 +22,13 @@
   "readmeFilename": "README.md",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "npm run build-commonjs && npm run build-browser && npm run build-types",
+    "build": "npm run build-commonjs && npm run build-browser",
     "build-commonjs": "npm run build-commonjs:clean && npm run build-commonjs:build",
-    "build-commonjs:clean": "rimraf commonjs",
-    "build-commonjs:build": "rollup -c rollup.commonjs.config.js",
+    "build-commonjs:clean": "rm -f ./index.d.ts",
+    "build-commonjs:build": "tsc -p tsconfig.json",
     "build-browser": "npm run build-browser:clean && npm run build-browser:build",
     "build-browser:clean": "rimraf browser",
     "build-browser:build": "rollup -c rollup.browser.config.js",
-    "build-types": "npm run build-types:clean && npm run build-types:build",
-    "build-types:clean": "rm -f ./index.d.ts",
-    "build-types:build": "tsc -p tsconfig.types.json",
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint --ext=.js src/* tests/*",
     "test": "./bin/test"

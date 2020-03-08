@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "module": "amd",  // https://github.com/Microsoft/TypeScript/issues/27117
+    "module": "commonjs",
     "target": "es5",
     "declaration": true,
-    "emitDeclarationOnly": true,
     "moduleResolution": "node",
-    "outFile": "./index.d.ts"
+    "outDir": "./commonjs"
   },
   "include": [
     "./src/**/*"
