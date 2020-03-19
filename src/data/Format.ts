@@ -1,14 +1,3 @@
-/*
- * js-pubcontrol
- * (C) 2015 Fanout, Inc.
- * File name: format.js
- * File authors:
- * Katsuyuki Ohmuro <harmony7@pex2.jp>
- * Konstantin Bokarius <kon@fanout.io>
- * File contains: the Format abstract class.
- * Licensed under the MIT License, see file COPYING for details.
- */
-
 import IPubControlItemFormat from "./IPubControlItemFormat";
 import IPubControlItemFormatExported from "./IPubControlItemFormatExported";
 

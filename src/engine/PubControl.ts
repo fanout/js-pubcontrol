@@ -88,5 +88,7 @@ export default class PubControl {
                 cb(false, message, context);
             }
         })();
+
+        return undefined;
     }
 }

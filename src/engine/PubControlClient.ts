@@ -68,7 +68,7 @@ export default class PubControlClient {
     // An internal method for starting the work required for publishing
     // a message. Accepts the URI endpoint, authorization header, items
     // object, and optional callback as parameters.
-    async _startPubCall(uri: string, authHeader: string | null, items: IPubControlItemExported[]) {
+    async _startPubCall(uri: string | undefined, authHeader: string | null, items: IPubControlItemExported[]) {
         // Prepare Request Body
         const content = JSON.stringify({ items: items });
         // Build HTTP headers
