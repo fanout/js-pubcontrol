@@ -17,7 +17,7 @@
   "main": "build/index.js",
   "module": "build/index.es.js",
   "jsnext:main": "build/index.es.js",
-  "types": "build/index.d.ts",
+  "types": "build/main.d.ts",
   "sideEffects": false,
   "repository": {
     "type": "git",
