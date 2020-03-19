@@ -1,6 +1,4 @@
 node_modules/
 
 /browser/
-/commonjs/
-
-/index.d.ts
+/build/

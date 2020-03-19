@@ -13,22 +13,23 @@
       "email": "kon@fanout.io"
     }
   ],
-  "main": "./commonjs/main.commonjs.js",
-  "exports": {
-    "./esm": "./esm.js"
-  },
+  "license": "MIT",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
+  "jsnext:main": "build/index.es.js",
+  "types": "build/index.d.ts",
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/fanout/node-pubcontrol.git"
+    "url": "https://github.com/fanout/js-pubcontrol"
   },
   "readmeFilename": "README.md",
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "npm run build-commonjs && npm run build-browser",
     "build-commonjs": "npm run build-commonjs:clean && npm run build-commonjs:build",
-    "build-commonjs:clean": "rimraf commonjs",
-    "build-commonjs:build": "tsc",
+    "build-commonjs:clean": "rimraf build",
+    "build-commonjs:build": "rollup -c rollup.commonjs.config.js",
     "build-browser": "npm run build-browser:clean && npm run build-browser:build",
     "build-browser:clean": "rimraf browser",
     "build-browser:build": "rollup -c rollup.browser.config.js",
@@ -49,29 +50,18 @@
     "isomorphic-fetch": "^2.2.1",
     "jwt-simple": "^0.5.6"
   },
-  "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/runtime-corejs3": "^7.8.7",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-replace": "^2.3.1",
     "@rollup/plugin-typescript": "^3.0.0",
-    "@types/node": "^13.7.7",
-    "babel-eslint": "^10.1.0",
-    "builtin-modules": "^3.1.0",
-    "core-js": "^3.6.4",
-    "eslint": "^6.8.0",
-    "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.2",
     "rollup": "^1.32.0",
-    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-typescript2": "^0.26.0",
     "ts-node": "^8.6.2",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"

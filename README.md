@@ -25,7 +25,7 @@ This example illustrates the process of instantiating the PubControl publisher
 class, defining a data format, and then publishing some data.
 
 ```javascript
-import PubControl from '@fanoutio/pubcontrol/esm';
+import PubControl from '@fanoutio/pubcontrol';
 const { Format, Item } = PubControl;
 
 // Instantiate PubControl publisher.
@@ -80,7 +80,7 @@ PubControl instance yourself.  This allows for finer tuning of authentication us
 by the client.
 
 ```javascript
-import PubControl from '@fanoutio/pubcontrol/esm';
+import PubControl from '@fanoutio/pubcontrol';
 const { PubControlClient } = PubControl;
 
 const pub = new PubControl();
@@ -167,12 +167,6 @@ Import in your JavaScript:
 import PubControl, { Item, Format, } from '@fanoutio/pubcontrol';
 const pub = new PubControl({uri: "<endpoint_uri>"});
 ```
-
-### ESM
-
-This package is a hybrid package, and an ESM version of the library is
-available by specifying the deep path to the `/esm` export when importing
-this package.
 
 ### CommonJS  
 

@@ -4,11 +4,11 @@ import Item from './data/Item';
 import PubControl from './engine/PubControl';
 import PubControlClient from './engine/PubControlClient';
 
-export {
-    Auth,
-    Format,
-    Item,
-    PubControlClient,
-};
+class ExportObject extends PubControl {
+    static Auth = Auth;
+    static Format = Format;
+    static Item = Item;
+    static PubControlClient = PubControlClient;
+}
 
-export default PubControl;
+export default ExportObject;
