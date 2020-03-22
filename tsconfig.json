@@ -3,7 +3,7 @@
     "outDir": "build",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es5", "dom"],
+    "lib": ["es5", "es2015", "dom"],
     "sourceMap": true,
     "allowJs": false,
     "declaration": true,

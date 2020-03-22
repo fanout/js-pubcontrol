@@ -1,4 +1,4 @@
-export default interface IPubControlItemExported {
+export default interface IItemExport {
     channel?: string;
     id?: string;
     "prev-id"?: string;

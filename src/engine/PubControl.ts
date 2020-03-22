@@ -1,14 +1,9 @@
 import PubControlClient from "./PubControlClient";
 import PublishException from "../data/PublishException";
-import Item from "../data/Item";
 
-interface IPubControlConfig {
-    uri: string;
-    iss?: string;
-    key?: string;
-}
-
-type IPubControlPublishCallback = (status: boolean, message?: string, context?: any) => void;
+import IItem from "../data/IItem";
+import IPubControlConfig from "./IPubControlConfig";
+import IPubControlPublishCallback from "./IPubControlPublishCallback";
 
 // The PubControl class allows a consumer to manage a set of publishing
 // endpoints and to publish to all of those endpoints via a single publish
@@ -57,13 +52,16 @@ export default class PubControl {
     // Note that a failure to publish in any of the configured PubControlClient
     // instances will result in a failure result being passed to the callback
     // method along with the first encountered error message.
-    publish(channel: string, item: Item, cb?: IPubControlPublishCallback) {
+    // If no callback method is passed, then this function returns a promise which
+    // is resolved when the publish is complete, or the promise being rejected with
+    // an exception describing the failure if the publish fails.
+    publish(channel: string, item: IItem, cb?: IPubControlPublishCallback): Promise<void> {
         const publishResults = Promise.all(
-            this.clients.map(async client => Promise.resolve(client.publish(channel, item)))
+            this.clients.map(client => client.publish(channel, item))
         );
 
         if (cb == null) {
-            return Promise.resolve(publishResults);
+            return Promise.resolve(publishResults as unknown as Promise<void>);
         }
 
         (async() => {
@@ -89,6 +87,6 @@ export default class PubControl {
             }
         })();
 
-        return undefined;
+        return Promise.resolve();
     }
 }

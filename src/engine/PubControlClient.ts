@@ -6,8 +6,8 @@ import * as auth from '../utils/auth/index';
 import PublishException from '../data/PublishException';
 
 import IAuth from "../utils/auth/IAuth";
-import Item from "../data/Item";
-import IPubControlItemExported from "../data/IPubControlItemExported";
+import IItem from "../data/IItem";
+import IItemExport from "../data/IItemExport";
 
 interface IHeaders {
     [name: string]: string;
@@ -58,7 +58,7 @@ export default class PubControlClient {
 
     // The publish method for publishing the specified item to the specified
     // channel on the configured endpoint.
-    async publish(channel: string, item: Item): Promise<void> {
+    async publish(channel: string, item: IItem): Promise<void> {
         const i = item.export();
         i.channel = channel;
         const authHeader = this.auth != null ? this.auth.buildHeader() : null;
@@ -68,7 +68,7 @@ export default class PubControlClient {
     // An internal method for starting the work required for publishing
     // a message. Accepts the URI endpoint, authorization header, items
     // object, and optional callback as parameters.
-    async _startPubCall(uri: string | undefined, authHeader: string | null, items: IPubControlItemExported[]) {
+    async _startPubCall(uri: string | undefined, authHeader: string | null, items: IItemExport[]) {
         // Prepare Request Body
         const content = JSON.stringify({ items: items });
         // Build HTTP headers
