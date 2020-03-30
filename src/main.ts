@@ -11,13 +11,15 @@ import IItemExport from './data/IItemExport';
 import IPubControlConfig from './engine/IPubControlConfig';
 import IPubControlPublishCallback from "./engine/IPubControlPublishCallback";
 
-class ExportObject extends PubControl {
-    static Auth = Auth;
-    static Format = Format;
-    static Item = Item;
-    static PubControlClient = PubControlClient;
-}
-export default ExportObject;
+export default Object.assign(
+    PubControl,
+    {
+        Auth,
+        Format,
+        Item,
+        PubControlClient,
+    }
+);
 
 export type {
     IFormat,
