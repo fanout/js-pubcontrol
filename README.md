@@ -19,6 +19,12 @@ This library contains a Format base class and a PubControl class that is used
 to send messages. This library also supports the case when the EPCP endpoint
 requires certain types of authentication.
 
+## Installation
+
+```sh
+npm install @fanoutio/pubcontrol
+```
+
 ## Sample Usage
 
 This example illustrates the process of instantiating the PubControl publisher
@@ -151,23 +157,6 @@ go through a transpile step.)
 
 ## Consuming this library
 
-### ESM
-
-If you are using Node 12.0 or newer or building a bundle for a browser using a
-modern bundler, you can use this package as an ESM module.  Install it as an
-npm package:
-
-```bash
-npm install @fanoutio/pubcontrol
-```
-
-Import in your JavaScript:
-
-```javascript
-import PubControl, { Item, Format, } from '@fanoutio/pubcontrol';
-const pub = new PubControl({uri: "<endpoint_uri>"});
-```
-
 ### CommonJS  
 
 The CommonJS version of this package requires Node v8 or newer.
@@ -178,6 +167,25 @@ Require in your JavaScript:
 const PubControl = require('@fanoutio/pubcontrol');
 const { Format, Item } = PubControl;
 const pub = new PubControl({uri: "<endpoint_uri>"});
+```
+
+If you are building a bundle, you may also import in your JavaScript.
+
+```javascript
+import PubControl from '@fanoutio/pubcontrol';
+const { Format, Item } = PubControl;
+const pub = new PubControl({uri: "<endpoint_uri>"});
+```
+
+This package comes with full TypeScript type definitions, so you may use it with
+TypeScript as well.
+
+```javascript
+import PubControl, { IFormat } from '@fanoutio/pubcontrol';
+const { Format, Item } = PubControl;
+const pub = new PubControl({uri: "<endpoint_uri>"});
+
+// IFormat is a type declaration.
 ```
 
 ### As a script tag in web browsers
