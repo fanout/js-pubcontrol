@@ -2,54 +2,71 @@ import assert from "assert";
 
 import PubControl from "../src/engine/PubControl";
 import PubControlClient from "../src/engine/PubControlClient";
+/*
 import PublishException from "../src/data/PublishException";
 import Jwt from "../src/utils/auth/Jwt";
 import Item from "../src/data/Item";
+*/
 
-(function testInitialize() {
-    let pc = new PubControl();
-    assert.equal(pc.clients.length, 0);
-    pc = new PubControl({ uri: "uri", iss: "iss", key: "key==" });
-    assert.equal(pc.clients.length, 1);
-})();
+describe('PubControl', function () {
+    describe('#constructor', function () {
+        it('test case', function () {
+            const pc = new PubControl();
+            assert.equal(pc.clients.length, 0);
+        });
+        it('test case', function () {
+            const pc = new PubControl({ uri: "uri", iss: "iss", key: "key==" });
+            assert.equal(pc.clients.length, 1);
+        });
+    });
+    describe('#removeAllClients', function () {
+        it('test case', function () {
+            const pc = new PubControl({ uri: "uri", iss: "iss", key: "key==" });
+            assert.equal(pc.clients.length, 1);
+            pc.removeAllClients();
+            assert.equal(pc.clients.length, 0);
+        });
+    });
+    describe('#addClient', function () {
+        it('test case', function () {
+            const pc = new PubControl({ uri: "uri", iss: "iss", key: "key==" });
+            assert.equal(pc.clients.length, 1);
+            pc.addClient(new PubControlClient("uri"));
+            assert.equal(pc.clients.length, 2);
+        });
+    });
+    describe('#applyConfig', function () {
+        it('test case', function () {
+            const pubControl = new PubControl();
+            const pc = pubControl as any;
+            pubControl.applyConfig({ uri: "uri", iss: "iss", key: "key==" });
+            assert.equal(pc.clients.length, 1);
+            assert.equal(pc.clients[0].uri, "uri");
+            assert.equal(pc.clients[0].auth.claim["iss"], "iss");
+            assert.equal(pc.clients[0].auth.key, "key==");
+            pubControl.applyConfig([
+                { uri: "uri2", iss: "iss2", key: "key==2" },
+                { uri: "uri3", iss: "iss3", key: "key==3" }
+            ]);
+            assert.equal(pc.clients.length, 3);
+            assert.equal(pc.clients[0].uri, "uri");
+            assert.equal(pc.clients[0].auth.claim["iss"], "iss");
+            assert.equal(pc.clients[0].auth.key, "key==");
+            assert.equal(pc.clients[1].uri, "uri2");
+            assert.equal(pc.clients[1].auth.claim["iss"], "iss2");
+            assert.equal(pc.clients[1].auth.key, "key==2");
+            assert.equal(pc.clients[2].uri, "uri3");
+            assert.equal(pc.clients[2].auth.claim["iss"], "iss3");
+            assert.equal(pc.clients[2].auth.key, "key==3");
+        });
+    });
+    describe('#applyConfig', function () {
+        it('test case', function () {
+        });
+    });
+});
 
-(function testRemoveAllClients() {
-    const pc = new PubControl({ uri: "uri", iss: "iss", key: "key==" });
-    assert.equal(pc.clients.length, 1);
-    pc.removeAllClients();
-    assert.equal(pc.clients.length, 0);
-})();
-
-(function testAddClient() {
-    const pc = new PubControl({ uri: "uri", iss: "iss", key: "key==" });
-    assert.equal(pc.clients.length, 1);
-    pc.addClient(new PubControlClient("uri"));
-    assert.equal(pc.clients.length, 2);
-})();
-
-(function testApplyConfig() {
-    const pc = new PubControl();
-    pc.applyConfig({ uri: "uri", iss: "iss", key: "key==" });
-    assert.equal(pc.clients.length, 1);
-    assert.equal(pc.clients[0].uri, "uri");
-    assert.equal((<Jwt>pc.clients[0].auth).claim["iss"], "iss");
-    assert.equal((<Jwt>pc.clients[0].auth).key, "key==");
-    pc.applyConfig([
-        { uri: "uri2", iss: "iss2", key: "key==2" },
-        { uri: "uri3", iss: "iss3", key: "key==3" }
-    ]);
-    assert.equal(pc.clients.length, 3);
-    assert.equal(pc.clients[0].uri, "uri");
-    assert.equal((<Jwt>pc.clients[0].auth).claim["iss"], "iss");
-    assert.equal((<Jwt>pc.clients[0].auth).key, "key==");
-    assert.equal(pc.clients[1].uri, "uri2");
-    assert.equal((<Jwt>pc.clients[1].auth).claim["iss"], "iss2");
-    assert.equal((<Jwt>pc.clients[1].auth).key, "key==2");
-    assert.equal(pc.clients[2].uri, "uri3");
-    assert.equal((<Jwt>pc.clients[2].auth).claim["iss"], "iss3");
-    assert.equal((<Jwt>pc.clients[2].auth).key, "key==3");
-})();
-
+/*
 (async function testPublish() {
     let wasPublishCalled = false;
     const testItem = <Item>{};
@@ -186,3 +203,4 @@ import Item from "../src/data/Item";
     assert.equal(resultEx.message, "error 2");
     assert.equal(resultEx.context.value, 2)
 })();
+*/

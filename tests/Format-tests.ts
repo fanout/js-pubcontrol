@@ -1,11 +1,17 @@
-import assert from "assert";
+// import assert from "assert";
 
-import Format from '../src/data/Format';
+// import Format from '../src/data/Format';
 
 // TODO: Write tests for concrete formats
 
 /*
-const fmt = new Format();
-assert.equal(fmt.name(), null);
-assert.equal(fmt.export(), null);
+describe('Format', function () {
+    describe('#constructor', function () {
+        it('test case', function () {
+            const fmt = new Format();
+            assert.equal(fmt.name(), null);
+            assert.equal(fmt.export(), null);
+        });
+    });
+});
 */
