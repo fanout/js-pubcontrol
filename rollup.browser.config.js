@@ -37,7 +37,7 @@ export default {
         json(),
         typescript({
             declaration: false,
-            esModuleInterop: false
+            esModuleInterop: false,
         }),
     ],
 };
