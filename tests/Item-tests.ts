@@ -97,6 +97,3 @@ describe('Item', function () {
         });
     });
 });
-
-(function testExport() {
-})();
