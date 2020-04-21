@@ -5,6 +5,10 @@ import IFormatExport from "./IFormatExport";
 // formats that are included in the Item class. Examples of format
 // implementations include JsonObjectFormat and HttpStreamFormat.
 
+// In pure TypeScript this would not be needed (implementations would
+// only need to implement IFormat), but since this needs to be consumable
+// from JavaScript, we are exporting this class.
+
 export default abstract class Format implements IFormat {
     // The name of the format which should return a string. Examples
     // include 'json-object' and 'http-response'

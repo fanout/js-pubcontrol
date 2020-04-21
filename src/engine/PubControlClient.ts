@@ -9,14 +9,19 @@ import IAuth from "../utils/auth/IAuth";
 import IItem from "../data/IItem";
 import IItemExport from "../data/IItemExport";
 
-interface IHeaders {
+interface IReqHeaders {
     [name: string]: string;
 }
 interface IReqParams {
     method: string;
-    headers: IHeaders;
+    headers: IReqHeaders;
     body: string;
     agent?: HttpAgent;
+}
+interface IContext {
+    statusCode: number,
+    headers?: object,
+    httpBody?: any,
 }
 interface FetchResponse {
     status: number;
@@ -72,7 +77,7 @@ export default class PubControlClient {
         // Prepare Request Body
         const content = JSON.stringify({ items: items });
         // Build HTTP headers
-        const headers: IHeaders = {
+        const headers: IReqHeaders = {
             "Content-Type": "application/json",
             "Content-Length": "" + Buffer.byteLength( content, "utf8"),
         };
@@ -113,9 +118,9 @@ export default class PubControlClient {
             throw new PublishException(err.message, { statusCode: -1 });
         }
 
-        const context = {
+        const context: IContext = {
             statusCode: res.status,
-            headers: res.headers
+            headers: res.headers,
         };
         let mode;
         let data;
@@ -131,7 +136,7 @@ export default class PubControlClient {
 
     // An internal method for finishing the HTTP request for publishing
     // a message.
-    _finishHttpRequest(mode: string, httpData: any, context: any) {
+    _finishHttpRequest(mode: string, httpData: any, context: IContext) {
         context.httpBody = httpData;
         if (mode === "end") {
             if (context.statusCode < 200 || context.statusCode >= 300) {
