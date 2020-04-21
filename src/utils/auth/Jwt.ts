@@ -17,13 +17,13 @@ export default class Jwt extends Base {
         super();
         // Initialize with the specified claim and key. If only one parameter
         // was provided then treat it as the literal token.
-        if (args.length == 1) {
-            this.token = <string>args[0];
+        if (args.length === 1) {
+            this.token = args[0] as string;
             this.claim = undefined;
             this.key = undefined;
         } else {
             this.token = undefined;
-            this.claim = <object>args[0];
+            this.claim = args[0] as object;
             this.key = args[1] instanceof Buffer ? args[1] : Buffer.from( String(args[1]), "utf8" );
         }
     }

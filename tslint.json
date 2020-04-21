@@ -4,6 +4,10 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "callable-types": false,
+        "no-string-literal": false,
+        "object-literal-shorthand": false
+    },
     "rulesDirectory": []
 }
