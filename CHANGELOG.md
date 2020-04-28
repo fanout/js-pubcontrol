@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [Planned for 2.0.0]
+## [Planned for 2.1.6]
+- Added back additional demos.
 
 ## [2.0.0] - 2020-03-08
 - Major update with great improvements in usability, with support for modern

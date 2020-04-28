@@ -239,14 +239,14 @@ curl http://localhost:7999/stream
 ```
 6. In another terminal window, Run the demo
 ```
-node demo test "Message"
+node demos/basic test "Message"
 ```
 7. In the window that you opened in step 5, you should see the test message.
 
 ## Other Demos
 
 For more examples, including running pubcontrol in a browser,
-see the `js-pubcontrol-demos` repository.
+see the other subdirectories inside the `demos` directory.
 
 ## License
 

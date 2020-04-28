@@ -1,7 +1,5 @@
-// DEMO - Publishes test message to local Pushpin.
-// See README.md for directions on running this demo.
-const PubControl = require('..');
-const { Item, Format } = PubControl;
+const PubControl = require('../..');
+const { Item, Format, } = PubControl;
 
 // Define a data format.
 class HttpStreamFormat extends Format {
@@ -13,27 +11,44 @@ class HttpStreamFormat extends Format {
         return 'http-stream';
     }
     export() {
-        return { content: this.message + '\n', };
+        const data = {
+            event: 'message',
+            data: this.message,
+        };
+        const content = Object.entries(data)
+            .map(([key, value]) => `${key}: ${value.replace('\n', '\\n')}`)
+            .join('\n') + '\n\n';
+        return { content, };
     }
 }
-
-const uri = "http://localhost:5561/";
 
 const [
     ,
     ,
     channel,
     message,
+    uri,
+    iss,
+    key,
 ] = process.argv;
 
-console.log( 'Publish URI', uri );
 console.log( 'Channel', channel );
 console.log( 'Message', message );
+console.log( 'Publish URI', uri );
+console.log( 'Claim ISS (realm id)', iss );
+console.log( 'Claim Key (realm key)', key );
 
-// Instantiate PubControl publisher.
 const config = {
     uri,
 };
+if (iss != null && iss !== '') {
+    config.iss = iss;
+}
+if (key != null && key !== '') {
+    config.key = Buffer.from(key, 'base64');
+}
+
+// Instantiate PubControl publisher.
 const pub = new PubControl(config);
 
 // Publish across all configured endpoints.
