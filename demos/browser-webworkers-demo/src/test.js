@@ -36,6 +36,9 @@ async function testFromReadme({ uri, iss, key, defaultChannel }) {
             new Item(new HttpResponseFormat("Test Publish!"))
         );
         console.log("Publish successful!");
+        return {
+            message: "Publish successful!",
+        };
     } catch (error) {
         const { message, context } = error;
         console.error("Error publishing", error);

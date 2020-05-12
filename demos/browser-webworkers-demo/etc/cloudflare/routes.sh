@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
-THIS_DIR="$(dirname "$(readlink -f "$0")")"
+# Would use readlink -f, but it's not available on macOS
+# ---
+pushd .
+
+TARGET_FILE=$0
+while [ "$TARGET_FILE" != "" ]; do
+    cd `dirname $TARGET_FILE`
+    FILENAME=`basename $TARGET_FILE`
+    TARGET_FILE=`readlink $FILENAME`
+done
+LINK=`pwd -P`/$FILENAME
+
+popd
+# ---
+
+THIS_DIR="$(dirname "$LINK")"
 
 # https://developers.cloudflare.com/workers/api/#upload-a-worker
 function list_routes() {

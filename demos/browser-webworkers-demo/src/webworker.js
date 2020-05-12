@@ -1,6 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import { Buffer } from 'buffer';
 self.Buffer = self.Buffer || Buffer;
 
@@ -13,7 +10,7 @@ main();
  * Listen for messages from the host page.
  * When configured for EPCP, maybe test pubcontrol with that configuration.
  */
-async function main() {
+function main() {
   let state = {};
   const setState = stateUpdates => {
     state = { ...state, ...stateUpdates };
@@ -77,7 +74,7 @@ async function main() {
       <h1>npm pubcontrol browser-demo: webworker</h1>
       <p>It works!</p>
       <p>
-      cpcp.url: ${url.searchParams.get("epcp.uri")}
+      epcp.url: ${url.searchParams.get("epcp.uri")}
       </p>
       <p>formattedTestPubControlResult ${formattedTestPubControlResult}</p>
       <p>formattedTestPubControlError ${formattedTestPubControlError}</p>
@@ -89,7 +86,7 @@ async function main() {
   }
 
   async function onInstall(event) {
-    consoe.debug("webworker onInstall", event);
+    console.debug("webworker onInstall", event);
   }
 
   async function onMessage(event) {

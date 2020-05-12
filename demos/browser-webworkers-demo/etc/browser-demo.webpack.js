@@ -59,9 +59,8 @@ const browserDemoWebWorkerWebpackConfig = {
           loader: 'babel-loader',
           options: {
             presets: [
-              [ "@babel/preset-env", { useBuiltIns: "entry", corejs: 3 } ]
+              [ "@babel/preset-env", { targets: { node: 14, } } ]
             ],
-            plugins: ['@babel/plugin-proposal-class-properties']
           },
         }
       }
