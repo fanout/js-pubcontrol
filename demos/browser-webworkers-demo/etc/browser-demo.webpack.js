@@ -3,6 +3,11 @@ const path = require("path");
 const projectRoot = path.join(__dirname, "../");
 const sourceDir = path.join(projectRoot, "./src");
 
+// Since pubcontrol is defined in package.json as a symlink to parent directory
+// we must specifically exclude it from babel-loader by testing input files against
+// the directory it's in.
+const pubcontrolpath = path.dirname(require.resolve('pubcontrol'));
+
 /**
  * webpack config for main browser-demo entrypoint, which doesn't do much but load the web worker.
  */
@@ -25,7 +30,10 @@ const browserDemoWebpackConfig = {
     rules: [
       {
         test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: [
+          /(node_modules|bower_components)/,
+          function(input) { return input.startsWith(pubcontrolpath); },
+        ],
         use: {
           loader: 'babel-loader',
           options: {
