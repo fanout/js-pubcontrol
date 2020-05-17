@@ -16,7 +16,7 @@ popd
 # ---
 
 THIS_DIR="$(dirname "$LINK")"
-default_worker="$THIS_DIR/../../dist/*.webworker.js"
+default_worker="$THIS_DIR/../../dist/*.cloudflareworker.js"
 
 # https://developers.cloudflare.com/workers/api/#upload-a-worker
 function upload_worker() {

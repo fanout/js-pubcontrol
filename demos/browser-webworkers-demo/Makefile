@@ -16,7 +16,7 @@ watch:
 	npm run watch
 
 cloudflare-worker-upload: dist
-	./etc/cloudflare/upload-webworker.sh dist/pubcontrol-browser-demo.webworker.js
+	./etc/cloudflare/upload-webworker.sh dist/pubcontrol-browser-demo.cloudflareworker.js
 
 cloudflare: cloudflare-worker-upload
 

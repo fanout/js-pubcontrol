@@ -38,7 +38,7 @@ const browserDemoWebpackConfig = {
           loader: 'babel-loader',
           options: {
             presets: [
-              [ "@babel/preset-env", { useBuiltIns: "entry", corejs: 3 } ]
+              [ "@babel/preset-env", { useBuiltIns: "usage", corejs: 3 } ]
             ],
             plugins: ['@babel/plugin-proposal-class-properties'],
           },
@@ -58,6 +58,18 @@ const browserDemoWebWorkerWebpackConfig = {
   ...browserDemoWebpackConfig,
   entry: [path.join(sourceDir, "./webworker")],
   target: "webworker",
+  output: {
+    ...browserDemoWebpackConfig.output,
+    filename: "pubcontrol-browser-demo.webworker.js"
+  }
+};
+
+/**
+ * webpack config for the Cloudflare Worker bundle
+ */
+const browserDemoCloudflareWorkerWebpackConfig = {
+  ...browserDemoWebWorkerWebpackConfig,
+  entry: [path.join(sourceDir, "./cloudflare-worker")],
   module: {
     rules: [
       {
@@ -76,11 +88,11 @@ const browserDemoWebWorkerWebpackConfig = {
   },
   output: {
     ...browserDemoWebpackConfig.output,
-    filename: "pubcontrol-browser-demo.webworker.js"
+    filename: "pubcontrol-browser-demo.cloudflareworker.js"
   }
 };
 
 /**
  * Export a webpack multi-config
  */
-module.exports = [browserDemoWebpackConfig, browserDemoWebWorkerWebpackConfig];
+module.exports = [browserDemoWebpackConfig, browserDemoWebWorkerWebpackConfig, browserDemoCloudflareWorkerWebpackConfig];
